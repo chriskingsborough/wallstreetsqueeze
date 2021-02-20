@@ -18,13 +18,14 @@ def home_page():
 
     indices = fetch_indices()
     date = fetch_refresh_date()
-    print(date)
+
     return render_template('index.html', indices=indices, refresh_date=date)
 
 @app.route('/large_cap')
 def large_cap():
 
     stocks = fetch_stocks("S&P 500")
+    date = fetch_refresh_date()
 
     return render_template('large_cap_stocks.html', stock_data=stocks, refresh_date=date)
 
@@ -32,6 +33,7 @@ def large_cap():
 def medium_cap():
 
     stocks = fetch_stocks("S&P 400")
+    date = fetch_refresh_date()
 
     return render_template('medium_cap_stocks.html', stock_data=stocks, refresh_date=date)
 
@@ -39,6 +41,7 @@ def medium_cap():
 def high_short():
 
     stocks = fetch_stocks("High Short Interest")
+    date = fetch_refresh_date()
 
     return render_template('high_short.html', stock_data=stocks, refresh_date=date)
 
