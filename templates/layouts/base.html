@@ -1,0 +1,28 @@
+<!doctype>
+
+<body>
+    <title>
+        Wall Street Squeeze
+    </title>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/large_cap">S&P 500</a></li>
+        <li><a href="/medium_cap">Medium Cap</a></li>
+        <li><a href="/high_short">High Short Interest</a></li>
+        <li style="float:right">
+            <a href="/">
+
+                Wall Street Squeeze
+                <!-- <img src={{
+                  url_for('static', filename='images/orange.png') }} alt="cartoon orange" width="1%"
+                > -->
+            </a>
+        </li>
+    </ul>
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        Last refreshed {{refresh_date}}
+    </footer>
+</body>

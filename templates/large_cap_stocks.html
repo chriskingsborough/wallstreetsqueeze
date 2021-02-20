@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script type=text/javascript src="{{
+  url_for('static', filename='js/main.js') }}"></script>
+</head>
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>Large Cap (S&P 500) Stocks</h1>
+
+<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
+
+<table id="stockTable">
+    <tr>
+        <th onclick="sortTable(0)">
+            Symbol
+        </th>
+        <th onclick="sortTable(1)">
+            Name
+        </th>
+        <th onclick="sortTable(2)">
+            Previous Close
+        </th>
+        <th onclick="sortTable(3)">
+            Short Interest
+        </th>
+        <th onclick="sortTable(4)">
+            Market Cap
+        </th>
+        <th>
+            52 Week Low
+        </th>
+        <th>
+            52 Week High
+        </th>
+        <th>
+            Sector
+        </th>
+    </tr>
+    {% for stock in stock_data %}
+        <tr>
+            <td>
+                {{ stock.ticker }}
+            </td>
+            <td>
+                {{ stock.info["shortName"] }}
+            </td>
+            <td>
+                {{ stock.info["previousClose"] }}
+            </td>
+            <td>
+                {{ stock.info["shortPercentOfFloat"] }}
+            </td>
+            <td>
+                {{ stock.info["marketCap"] }}
+            </td>
+            <td>
+                {{ stock.info["fiftyTwoWeekLow"] }}
+            </td>
+            <td>
+                {{ stock.info["fiftyTwoWeekHigh"] }}
+            </td>
+            <td>
+                {{ stock.info["sector"] }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
