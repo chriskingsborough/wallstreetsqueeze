@@ -65,7 +65,10 @@ def fetch_refresh_date():
 
     res = db.session.query(func.max(Indices.date)).one()
     dt = res[0]
-    formatted_date = datetime.strftime(dt, '%B %-d, %Y')
+    if dt:
+        formatted_date = datetime.strftime(dt, '%B %-d, %Y')
+    else:
+        formatted_date = ""
     return formatted_date
 
 if __name__ == "__main__":
