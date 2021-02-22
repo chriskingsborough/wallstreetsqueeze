@@ -7,7 +7,7 @@ from worker import conn
 from db_helpers import get_conn
 from worker import write_ticker_to_db
 from scraper import get_sp_companies, get_high_short_interest, _parse_tickers
-from indices import get_index_prices
+from indices import get_index_prices, populate_tickers
 
 q = Queue(connection=conn)
 
@@ -58,6 +58,13 @@ def high_short():
 def index_prices():
 
     job = q.enqueue_call(
+        func=populate_tickers,
+        retry=Retry(3),
+        result_ttl=5000
+    )
+
+
+    job = q.enqueue_call(
         func=get_index_prices,
         retry=Retry(3),
         result_ttl=5000
@@ -66,7 +73,6 @@ def index_prices():
 if __name__ == "__main__":
 
     index_prices()
-    # large_cap()
-    # medium_cap()
-    # high_short()
-    pass
+    large_cap()
+    medium_cap()
+    high_short()

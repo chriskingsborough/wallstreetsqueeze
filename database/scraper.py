@@ -9,14 +9,6 @@ import json
 import time
 from db_helpers import get_conn
 
-# DATABASE_URL = os.environ['DATABASE_URL']
-#
-# def get_conn():
-#
-#     conn = ps.connect(DATABASE_URL)
-#
-#     return conn
-
 def get_sp_companies(url):
     try:
         # pull list of S&P 500 stocks
