@@ -54,9 +54,9 @@ def get_index_prices():
         ticker = res[0]
         name = res[1]
 
-        yticker = yfinance.Ticker(ticker)
-
         try:
+
+            yticker = yfinance.Ticker(ticker)
             info = yticker.get_info()
             # previous_close = info["regularMarketPreviousClose"]
             closes = yticker.history(period="2d")
@@ -65,6 +65,14 @@ def get_index_prices():
             most_recent_close = closes.iloc[1]['Close']
             dollar_change = most_recent_close - previous_close
             decimal_change = (most_recent_close - previous_close) / previous_close
+
+            delete_sql = """
+            DELETE FROM indices
+            WHERE ticker = %s
+            """
+
+            cur.execute(delete_sql, (ticker,))
+            conn.commit()
 
             sql = """
             INSERT INTO indices (
@@ -100,6 +108,6 @@ def get_index_prices():
     cur.close()
     conn.close()
 
-if __name__ == '__main__':
-    populate_tickers()
-    get_index_prices()
+# if __name__ == '__main__':
+#     populate_tickers()
+#     get_index_prices()

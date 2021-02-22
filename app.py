@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
 from datetime import datetime
+from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -10,7 +11,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from database.models import Stocks, Indices, IndexTickers
-
 
 @app.route('/')
 def home_page():
@@ -43,7 +43,6 @@ def high_short():
     date = fetch_refresh_date()
 
     return render_template('high_short.html', stock_data=stocks, refresh_date=date)
-
 
 def fetch_indices():
 

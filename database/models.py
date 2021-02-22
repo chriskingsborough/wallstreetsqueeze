@@ -1,7 +1,6 @@
 from app import db
 from sqlalchemy.dialects.postgresql import JSON, DATE, REAL
 
-
 class Stocks(db.Model):
     __tablename__ = 'stocks'
 

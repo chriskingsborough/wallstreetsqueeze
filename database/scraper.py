@@ -7,21 +7,21 @@ import yfinance
 import psycopg2 as ps
 import json
 import time
+from db_helpers import get_conn
 
-DATABASE_URL = os.environ['DATABASE_URL']
-
-def get_conn():
-
-    conn = ps.connect(DATABASE_URL)
-
-    return conn
+# DATABASE_URL = os.environ['DATABASE_URL']
+#
+# def get_conn():
+#
+#     conn = ps.connect(DATABASE_URL)
+#
+#     return conn
 
 def get_sp_companies(url):
     try:
         # pull list of S&P 500 stocks
         page = requests.get(url)
         soup = BeautifulSoup(page.text, 'html.parser')
-
         # find the table
         tbody = soup.find('tbody')
         # separate the tbody into trs
@@ -54,7 +54,7 @@ def get_high_short_interest():
     pull_next_page = True
 
     while pull_next_page:
-        url f"https://www.highshortinterest.com/all/{page_num}"
+        url = f"https://www.highshortinterest.com/all/{page_num}"
         try:
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
@@ -148,11 +148,12 @@ def _parse_tickers(header_cols, stocks):
             break
 
     if found_symbol:
-        return [stock[i] for stock in stocks]
+        return [stock[i].replace('.', '-') for stock in stocks]
     else:
         return []
 
 if __name__ == '__main__':
+
     # print("High Short Interest Stocks")
     # short_tickers = get_high_short_interest()
     # write_to_db(short_tickers, 'High Short Interest')
@@ -161,12 +162,18 @@ if __name__ == '__main__':
     # url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
     # sp_tickers = _parse_tickers(*get_sp_companies(url))
     # write_to_db(sp_tickers, 'S&P 500')
-
-    print("S&P 400 Stocks")
-    url = "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies"
-    sp_tickers = _parse_tickers(*get_sp_companies(url))
-    write_to_db(sp_tickers, 'S&P 400')
+    #
+    # print("S&P 400 Stocks")
+    # url = "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies"
+    # sp_tickers = _parse_tickers(*get_sp_companies(url))
+    # write_to_db(sp_tickers, 'S&P 400')
 
     # print("S&P 600 Stocks")
     # url = "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies"
     # sp_tickers = _parse_tickers(*get_sp_companies(url))
+
+    # print("Dow Jones Industrial Average")
+    # url = "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average"
+    # sp_tickers = _parse_tickers(*get_sp_companies(url))
+    # print(sp_tickers)
+    pass
