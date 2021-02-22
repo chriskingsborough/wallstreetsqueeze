@@ -36,7 +36,7 @@ def large_cap():
 
 def medium_cap():
 
-    collection = "S&P 400 Stocks"
+    collection = "S&P 400"
     url = "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies"
     tickers = _parse_tickers(*get_sp_companies(url))
 
