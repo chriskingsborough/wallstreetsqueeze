@@ -6,7 +6,7 @@ import json
 from worker import conn
 from db_helpers import get_conn
 from worker import write_ticker_to_db
-from scraper import get_sp_companies, get_high_short_interest, _parse_tickers
+from scraper import get_sp_companies, get_high_short_interest, _parse_tickers, get_small_cap_tickers, get_dow_companies
 from indices import get_index_prices, populate_tickers
 
 q = Queue(connection=conn)
@@ -45,6 +45,24 @@ def medium_cap():
         collection
     )
 
+def small_cap():
+    collection = "S&P 600"
+    tickers = get_small_cap_tickers()
+
+    jobs = queue_stocks(
+        tickers,
+        collection
+    )
+
+def dow_jones():
+    collection = "Dow Jones"
+    tickers = get_dow_companies()
+
+    jobs = queue_stocks(
+        tickers,
+        collection
+    )
+
 def high_short():
 
     collection = "High Short Interest"
@@ -63,7 +81,6 @@ def index_prices():
         result_ttl=5000
     )
 
-
     job = q.enqueue_call(
         func=get_index_prices,
         retry=Retry(3),
@@ -75,4 +92,6 @@ if __name__ == "__main__":
     index_prices()
     large_cap()
     medium_cap()
+    small_cap()
+    dow_jones()
     high_short()

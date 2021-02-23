@@ -144,28 +144,57 @@ def _parse_tickers(header_cols, stocks):
     else:
         return []
 
-if __name__ == '__main__':
+def get_small_cap_tickers():
 
-    # print("High Short Interest Stocks")
-    # short_tickers = get_high_short_interest()
-    # write_to_db(short_tickers, 'High Short Interest')
-    #
-    # print("S&P 500 Stocks")
-    # url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-    # sp_tickers = _parse_tickers(*get_sp_companies(url))
-    # write_to_db(sp_tickers, 'S&P 500')
-    #
-    # print("S&P 400 Stocks")
-    # url = "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies"
-    # sp_tickers = _parse_tickers(*get_sp_companies(url))
-    # write_to_db(sp_tickers, 'S&P 400')
+    tickers = []
 
-    # print("S&P 600 Stocks")
-    # url = "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies"
-    # sp_tickers = _parse_tickers(*get_sp_companies(url))
+    urls = [
+        "https://www.marketvolume.com/indexes_exchanges/sp600_components.asp",
+        "https://www.marketvolume.com/indexes_exchanges/sp600_components.asp?s=SP600&row=250",
+        "https://www.marketvolume.com/indexes_exchanges/sp600_components.asp?s=SP600&row=500"
+    ]
 
-    # print("Dow Jones Industrial Average")
-    # url = "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average"
-    # sp_tickers = _parse_tickers(*get_sp_companies(url))
-    # print(sp_tickers)
-    pass
+    headers = {
+        'User-Agent': 'My User Agent 1.0'
+    }
+
+    for url in urls:
+        page = requests.get(url, headers=headers)
+
+        if page.status_code != 200:
+            page.raise_for_status()
+            raise
+
+        soup = BeautifulSoup(page.text, 'html.parser')
+        tbody = soup.find("tbody")
+        trs = tbody.find_all('tr')
+        symbols = [tr.find_all('td')[0].get_text() for tr in trs]
+
+        tickers.extend(symbols)
+
+    return tickers
+
+def get_dow_companies():
+
+    url = "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average"
+
+    headers = {
+        'User-Agent': 'My User Agent 1.0'
+    }
+
+    page = requests.get(url, headers=headers)
+
+    if page.status_code != 200:
+        page.raise_for_status()
+        raise
+
+    soup = BeautifulSoup(page.text, 'html.parser')
+    table = soup.find("table", {'id': 'constituents'})
+    tbody = table.find("tbody")
+    trs = tbody.find_all('tr')
+    tds = [tr.find_all('td') for tr in trs]
+    # remove the empty 1st row which contains headers
+    filtered_tds = list(filter(None, tds))
+    symbols = [td[1].get_text().strip() for td in filtered_tds]
+
+    return symbols
