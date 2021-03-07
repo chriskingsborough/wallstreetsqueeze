@@ -3,3 +3,8 @@ helpers.sh
 .env
 venv/
 __pycache__
+
+# ignore migrations versions
+# this is messed up between local dev & prod
+migrations/versions
+migrations/versions/*
