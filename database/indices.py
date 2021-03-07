@@ -67,7 +67,7 @@ def get_index_prices():
             decimal_change = (most_recent_close - previous_close) / previous_close
 
             delete_sql = """
-            DELETE FROM indices
+            DELETE FROM index_prices
             WHERE ticker = %s
             """
 
@@ -75,7 +75,7 @@ def get_index_prices():
             conn.commit()
 
             sql = """
-            INSERT INTO indices (
+            INSERT INTO index_prices (
                 ticker,
                 name,
                 date,

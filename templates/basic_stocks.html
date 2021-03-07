@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h1>Large Cap (S&P 500) Stocks</h1>
+<h1>{{title}}</h1>
 
 <input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
 
@@ -20,7 +20,7 @@
             Previous Close
         </th>
         <th onclick="sortTable(3)">
-            Short Interest
+            Dividend Yield
         </th>
         <th onclick="sortTable(4)">
             Market Cap
@@ -38,28 +38,28 @@
     {% for stock in stock_data %}
         <tr>
             <td>
-                {{ stock.ticker }}
+                {{ stock.Collections.ticker }}
             </td>
             <td>
-                {{ stock.info["shortName"] }}
+                {{ stock.StockInfo.shortName }}
             </td>
             <td>
-                {{ stock.info["previousClose"] }}
+                {{ stock.StockPrices.price }}
             </td>
             <td>
-                {{ stock.info["shortPercentOfFloat"] }}
+                {{ stock.StockInfo.dividendYield or '' }}
             </td>
             <td>
-                {{ stock.info["marketCap"] }}
+                {{ stock.StockInfo.marketCap }}
             </td>
             <td>
-                {{ stock.info["fiftyTwoWeekLow"] }}
+                {{ stock.StockInfo.fiftyTwoWeekLow }}
             </td>
             <td>
-                {{ stock.info["fiftyTwoWeekHigh"] }}
+                {{ stock.StockInfo.fiftyTwoWeekHigh }}
             </td>
             <td>
-                {{ stock.info["sector"] }}
+                {{ stock.StockInfo.industry }}
             </td>
         </tr>
     {% endfor %}

@@ -11,9 +11,20 @@
     </title>
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/large_cap">S&P 500</a></li>
+        <!-- <li><a href="/large_cap">S&P 500</a></li> -->
+        <div class="dropdown">
+            <button class="dropbtn">Large Cap
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/s_and_p_500">S&P 500</a>
+                <a href="/dow_jones">Dow Jones</a>
+                <a href="/nasdaq">Nasdaq 100</a>
+            </div>
+        </div>
         <li><a href="/medium_cap">Medium Cap</a></li>
-        <li><a href="/high_short">High Short Interest</a></li>
+        <li><a href="/small_cap">Small Cap</a></li>
+        <!-- <li><a href="/high_short">High Short Interest</a></li> -->
         <li style="float:right">
             <a href="/">
 

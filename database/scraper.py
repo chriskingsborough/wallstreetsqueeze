@@ -7,6 +7,7 @@ import yfinance
 import psycopg2 as ps
 import json
 import time
+import csv
 from db_helpers import get_conn
 
 def get_sp_companies(url):
@@ -198,3 +199,81 @@ def get_dow_companies():
     symbols = [td[1].get_text().strip() for td in filtered_tds]
 
     return symbols
+
+def get_nasdaq():
+
+    url = "https://en.wikipedia.org/wiki/NASDAQ-100"
+
+    headers = {
+        "User-Agent": "My User Agent 1.0"
+    }
+
+    page = requests.get(url, headers=headers)
+
+    if page.status_code != 200:
+        page.raise_for_status()
+        raise
+
+    soup = BeautifulSoup(page.text, 'html.parser')
+    table = soup.find("table", {'id': 'constituents'})
+    tbody = table.find("tbody")
+    trs = tbody.find_all('tr')
+    tds = [tr.find_all('td') for tr in trs]
+    # remove the empty 1st row which contains headers
+    filtered_tds = list(filter(None, tds))
+    symbols = [td[1].get_text().strip() for td in filtered_tds]
+
+    return symbols
+
+def read_russell_csv(url):
+
+    headers = {
+        "User-Agent": "My User Agent 1.0"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code != 200:
+        response.raise_for_status()
+        raise
+
+    raw_csv = response.text
+
+    csv_split = raw_csv.splitlines()
+
+    process_lines = False
+    data = []
+    num = 0
+    for row in csv_split:
+        # if empty line is encountered
+        if row.isspace():
+            # flip processing lines on/off
+            process_lines = not process_lines
+            continue
+        if process_lines:
+            data.append(row)
+        num+= 1
+
+    headers = data[0]
+
+    headers = headers.split(',')
+    parsed_data = [_parse_row(row) for row in csv.reader(data[1:], delimiter=',')]
+
+    return headers, parsed_data
+
+def _parse_row(row):
+
+    parsed_row = []
+    for field in row:
+        # remove the commas
+        field = field.replace(',', '')
+        # check if it's a numeric
+        try:
+            if field.replace('.', '', 1).isdigit():
+                field = float(field)
+        except ValueError:
+            # row is already string row
+            pass
+        parsed_row.append(field)
+
+    return parsed_row
