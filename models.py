@@ -61,6 +61,10 @@ class StockInfo(db.Model):
     priceToBook = db.Column(REAL)
     pegRatio = db.Column(REAL)
     earningsQuarterlyGrowth = db.Column(REAL)
+    # new dividend columns
+    trailingAnnualDividendYield = db.Column(REAL)
+    trailingAnnualDividendRate = db.Column(REAL)
+    exDividendDate = db.Column(DATE)
 
 class StockPrices(db.Model):
     """Stock price by day and ticker"""

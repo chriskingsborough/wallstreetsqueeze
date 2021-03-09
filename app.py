@@ -60,7 +60,6 @@ def small_cap():
 
     return render_template('basic_stocks.html', title='S&P 600', stock_data=stocks, refresh_date=date)
 
-
 @app.route('/high_short')
 def high_short():
 

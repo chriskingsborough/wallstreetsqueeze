@@ -58,11 +58,20 @@ def get_info(ticker):
         priceToBook = info.get("priceToBook")
         pegRatio = info.get("pegRatio")
         earningsQuarterlyGrowth = info.get("earningsQuarterlyGrowth")
+        # additional dividend info
+        trailingAnnualDividendYield = info.get("trailingAnnualDividendYield")
+        trailingAnnualDividendRate = info.get("trailingAnnualDividendRate")
+        exDividendDate = info.get("exDividendDate")
 
         # handle last lastDividendDate
         if lastDividendDate:
             timestamp = datetime.datetime.fromtimestamp(lastDividendDate)
             lastDividendDate = timestamp.strftime('%Y-%m-%d')
+
+        # handle exDividendDate
+        if exDividendDate:
+            timestamp = datetime.datetime.fromtimestamp(exDividendDate)
+            exDividendDate = timestamp.strftime('%Y-%m-%d')
 
         sql = """
         INSERT INTO stock_info
@@ -109,9 +118,12 @@ def get_info(ticker):
             "profitMargins",
             "priceToBook",
             "pegRatio",
-            "earningsQuarterlyGrowth"
+            "earningsQuarterlyGrowth",
+            "trailingAnnualDividendYield",
+            "trailingAnnualDividendRate",
+            "exDividendDate"
         )
-        VALUES(NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        VALUES(NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
 
         cur.execute(
@@ -158,7 +170,10 @@ def get_info(ticker):
                 profitMargins,
                 priceToBook,
                 pegRatio,
-                earningsQuarterlyGrowth
+                earningsQuarterlyGrowth,
+                trailingAnnualDividendYield,
+                trailingAnnualDividendRate,
+                exDividendDate
             )
         )
         conn.commit()

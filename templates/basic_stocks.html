@@ -6,30 +6,30 @@
 
 <h1>{{title}}</h1>
 
-<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
+<input type="text" id="stockFilter" onkeydown="filterStocks()" placeholder="Search stocks" title="Search stocks">
 
 <table id="stockTable">
     <tr>
-        <th onclick="sortTable(0)">
+        <th>
             Symbol
         </th>
-        <th onclick="sortTable(1)">
+        <th>
             Name
         </th>
-        <th onclick="sortTable(2)">
+        <th>
             Previous Close
         </th>
-        <th onclick="sortTable(3)">
+        <th>
             Dividend Yield
         </th>
-        <th onclick="sortTable(4)">
-            Market Cap
+        <th>
+            Market Cap (billions)
         </th>
         <th>
-            52 Week Low
+            PE Ratio
         </th>
         <th>
-            52 Week High
+            Beta
         </th>
         <th>
             Sector
@@ -44,19 +44,35 @@
                 {{ stock.StockInfo.shortName }}
             </td>
             <td>
-                {{ stock.StockPrices.price }}
+                ${{ stock.StockPrices.price }}
             </td>
             <td>
-                {{ stock.StockInfo.dividendYield or '' }}
+                {% if stock.StockInfo is not none and stock.StockInfo.dividendYield is not none %}
+                    {{ (stock.StockInfo.dividendYield*100)|round(2) }}%
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
-                {{ stock.StockInfo.marketCap }}
+                {% if stock.StockInfo is not none and stock.StockInfo.marketCap is not none %}
+                    ${{ (stock.StockInfo.marketCap/1000000000)|round(4) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
-                {{ stock.StockInfo.fiftyTwoWeekLow }}
+                {% if stock.StockInfo is not none and stock.StockInfo.forwardPE is not none %}
+                    {{ stock.StockInfo.forwardPE|round(2) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
-                {{ stock.StockInfo.fiftyTwoWeekHigh }}
+                {% if stock.StockInfo is not none and stock.StockInfo.beta is not none %}
+                    {{ stock.StockInfo.beta|round(2) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
                 {{ stock.StockInfo.industry }}
