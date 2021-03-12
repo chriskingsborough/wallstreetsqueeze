@@ -4,9 +4,9 @@
 
 {% block content %}
 
-<h1>High Short Interest</h1>
+<h1>{{title}}</h1>
 
-<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
+<input type="text" id="stockFilter" onkeydown="filterStocks()" placeholder="Search stocks" title="Search stocks">
 
 <table id="stockTable">
     <tr>
@@ -20,7 +20,10 @@
             Previous Close
         </th>
         <th>
-            Short Interest
+            Fifty Day Average
+        </th>
+        <th>
+            Two Hundred Day Average
         </th>
         <th>
             52 Week Low
@@ -29,10 +32,7 @@
             52 Week High
         </th>
         <th>
-            Beta
-        </th>
-        <th>
-            Earnings per Share
+            Price % of 52 Week Range
         </th>
         <th>
             Industry
@@ -47,10 +47,13 @@
                 {{ stock.shortName }}
             </td>
             <td>
-                {{ stock.price }}
+                ${{ stock.price }}
             </td>
             <td>
-                {{ stock.presShortPercentFloat }}
+                {{ stock.fiftyDayAverage }}
+            </td>
+            <td>
+                {{ stock.twoHundredDayAverage }}
             </td>
             <td>
                 {{ stock.fiftyTwoWeekLow }}
@@ -59,10 +62,7 @@
                 {{ stock.fiftyTwoWeekHigh }}
             </td>
             <td>
-                {{ stock.beta }}
-            </td>
-            <td>
-                {{ stock.forwardEps }}
+                {{ stock.pricePercentOfRange }}
             </td>
             <td>
                 {{ stock.industry }}

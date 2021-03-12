@@ -3,7 +3,6 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
 from datetime import datetime
-from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -11,6 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from models import *
+from models_views import *
 
 @app.route('/')
 def home_page():
@@ -63,10 +63,91 @@ def small_cap():
 @app.route('/high_short')
 def high_short():
 
-    stocks = fetch_stocks("High Short Interest")
+    stocks = db.session.query(
+        HighShortInterest
+    ).filter(
+        HighShortInterest.presShortPercentFloat > .20
+    ).all()
     date = fetch_refresh_date()
 
     return render_template('high_short.html', stock_data=stocks, refresh_date=date)
+
+@app.route('/dogs_of_the_dow')
+def dogs_of_the_dow():
+
+    stocks = db.session.query(
+        DowDogs
+    ).all()
+    date = fetch_refresh_date()
+
+    return render_template('dogs_of_the_dow.html', stock_data=stocks, refresh_date=date)
+
+@app.route('/high_dividend')
+def high_dividend():
+
+    stocks = db.session.query(
+        HighDividend
+    ).limit(25).all()
+    date = fetch_refresh_date()
+    title = 'High Dividend Stocks'
+
+    return render_template('dividend_stocks.html', title=title, stock_data=stocks, refresh_date=date)
+
+@app.route('/high_dividend_no_reit')
+def high_dividend_sans_reit():
+
+    stocks = db.session.query(
+        HighDividendSansReit
+    ).limit(25).all()
+    date = fetch_refresh_date()
+    title = 'High Dividend Stocks excluding REITs'
+
+    return render_template('dividend_stocks.html', title=title, stock_data=stocks, refresh_date=date)
+
+@app.route('/runners')
+def runners():
+
+    stocks = db.session.query(
+        Runners
+    ).limit(50).all()
+    date = fetch_refresh_date()
+    title = 'Runners'
+
+    return render_template('momentum_stocks.html', title=title, stock_data=stocks, refresh_date=date)
+
+@app.route('/dippers')
+def dippers():
+
+    stocks = db.session.query(
+        Dippers
+    ).limit(50).all()
+    date = fetch_refresh_date()
+    title = 'Dippers'
+
+    return render_template('momentum_stocks.html', title=title, stock_data=stocks, refresh_date=date)
+
+@app.route('/52_week_high')
+def fifty_two_week_high():
+
+    stocks = db.session.query(
+        PriceRangeHigh
+    ).limit(50).all()
+    date = fetch_refresh_date()
+    title = 'Top of Price Range'
+
+    return render_template('price_range.html',  title=title, stock_data=stocks, refresh_date=date)
+
+@app.route('/52_week_low')
+def fifty_two_week_low():
+
+    stocks = db.session.query(
+        PriceRangeLow
+    ).limit(50).all()
+    date = fetch_refresh_date()
+    title = 'Bottom of Price Range'
+
+
+    return render_template('price_range.html',  title=title, stock_data=stocks, refresh_date=date)
 
 def fetch_index_prices():
 

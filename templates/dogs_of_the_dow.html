@@ -4,36 +4,35 @@
 
 {% block content %}
 
-
-<h1>Medium Cap (S&P 400) Stocks</h1>
+<h1>Dogs of the Dow</h1>
 
 <input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
 
 <table id="stockTable">
     <tr>
-        <th onclick="sortTable(0)">
+        <th>
             Symbol
         </th>
-        <th onclick="sortTable(1)">
+        <th>
             Name
         </th>
-        <th onclick="sortTable(2)">
+        <th>
             Previous Close
         </th>
-        <th onclick="sortTable(3)">
-            Short Interest
-        </th>
-        <th onclick="sortTable(4)">
-            Market Cap
+        <th>
+            Dividend Yield
         </th>
         <th>
-            52 Week Low
+            Market Cap (billions)
         </th>
         <th>
-            52 Week High
+            PE Ratio
         </th>
         <th>
-            Sector
+            Beta
+        </th>
+        <th>
+            Small Dog
         </th>
     </tr>
     {% for stock in stock_data %}
@@ -42,25 +41,25 @@
                 {{ stock.ticker }}
             </td>
             <td>
-                {{ stock.info["shortName"] }}
+                {{ stock.shortName }}
             </td>
             <td>
-                {{ stock.info["previousClose"] }}
+                {{ stock.price }}
             </td>
             <td>
-                {{ stock.info["shortPercentOfFloat"] }}
+                {{ stock.trailingAnnualDividendYield }}
             </td>
             <td>
-                {{ stock.info["marketCap"] }}
+                {{ stock.marketCap }}
             </td>
             <td>
-                {{ stock.info["fiftyTwoWeekLow"] }}
+                {{ stock.forwardPE }}
             </td>
             <td>
-                {{ stock.info["fiftyTwoWeekHigh"] }}
+                {{ stock.beta }}
             </td>
             <td>
-                {{ stock.info["sector"] }}
+                {{ stock.smallDog }}
             </td>
         </tr>
     {% endfor %}

@@ -38,44 +38,44 @@
     {% for stock in stock_data %}
         <tr>
             <td>
-                {{ stock.Collections.ticker }}
+                {{ stock.ticker }}
             </td>
             <td>
-                {{ stock.StockInfo.shortName }}
+                {{ stock.shortName }}
             </td>
             <td>
-                ${{ stock.StockPrices.price }}
+                ${{ stock.price }}
             </td>
             <td>
-                {% if stock.StockInfo is not none and stock.StockInfo.trailingAnnualDividendYield is not none %}
-                    {{ (stock.StockInfo.trailingAnnualDividendYield*100)|round(2) }}%
+                {% if stock is not none and stock.trailingAnnualDividendYield is not none %}
+                    {{ (stock.trailingAnnualDividendYield*100)|round(2) }}%
                 {% else %}
                     {{ '' }}
                 {% endif %}
             </td>
             <td>
-                {% if stock.StockInfo is not none and stock.StockInfo.marketCap is not none %}
-                    ${{ (stock.StockInfo.marketCap/1000000000)|round(4) }}
+                {% if stock is not none and stock.marketCap is not none %}
+                    ${{ (stock.marketCap/1000000000)|round(4) }}
                 {% else %}
                     {{ '' }}
                 {% endif %}
             </td>
             <td>
-                {% if stock.StockInfo is not none and stock.StockInfo.forwardPE is not none %}
-                    {{ stock.StockInfo.forwardPE|round(2) }}
+                {% if stock is not none and stock.forwardPE is not none %}
+                    {{ stock.forwardPE|round(2) }}
                 {% else %}
                     {{ '' }}
                 {% endif %}
             </td>
             <td>
-                {% if stock.StockInfo is not none and stock.StockInfo.beta is not none %}
-                    {{ stock.StockInfo.beta|round(2) }}
+                {% if stock is not none and stock.beta is not none %}
+                    {{ stock.beta|round(2) }}
                 {% else %}
                     {{ '' }}
                 {% endif %}
             </td>
             <td>
-                {{ stock.StockInfo.industry }}
+                {{ stock.industry }}
             </td>
         </tr>
     {% endfor %}
