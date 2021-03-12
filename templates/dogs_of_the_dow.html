@@ -53,7 +53,7 @@
                 ${{ '%.4f'|format(stock.marketCap/1000000000) }}
             </td>
             <td>
-                {{ '%.4f'|format(stock.forwardPE) }}
+                {{ '%.2f'|format(stock.forwardPE) }}
             </td>
             <td>
                 {% if stock.beta is not none %}
