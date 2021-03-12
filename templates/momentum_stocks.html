@@ -47,22 +47,26 @@
                 {{ stock.shortName }}
             </td>
             <td>
-                ${{ stock.price }}
+                ${{ '%.2f'|format(stock.price) }}
             </td>
             <td>
-                {{ stock.fiftyDayAverage }}
+                ${{ '%.2f'|format(stock.fiftyDayAverage) }}
             </td>
             <td>
-                {{ stock.twoHundredDayAverage }}
+                ${{ '%.2f'|format(stock.twoHundredDayAverage) }}
             </td>
             <td>
-                {{ stock.fiftyTwoWeekLow }}
+                ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
             </td>
             <td>
-                {{ stock.fiftyTwoWeekHigh }}
+                ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
             </td>
             <td>
-                {{ stock.priceToSalesTrailing12Months }}
+                {% if stock.priceToSalesTrailing12Months is not none %}
+                    {{ '%.4f'|format(stock.priceToSalesTrailing12Months) }}
+                {% else %}
+                    {{''}}
+                {% endif %}
             </td>
             <td>
                 {{ stock.industry }}

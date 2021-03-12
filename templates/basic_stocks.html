@@ -44,11 +44,11 @@
                 {{ stock.StockInfo.shortName }}
             </td>
             <td>
-                ${{ stock.StockPrices.price }}
+                ${{ '%.2f'|format(stock.StockPrices.price) }}
             </td>
             <td>
                 {% if stock.StockInfo is not none and stock.StockInfo.trailingAnnualDividendYield is not none %}
-                    {{ (stock.StockInfo.trailingAnnualDividendYield*100)|round(2) }}%
+                    {{ '%.2f'|format((stock.StockInfo.trailingAnnualDividendYield*100)) }}%
                 {% else %}
                     {{ '' }}
                 {% endif %}

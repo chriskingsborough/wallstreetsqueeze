@@ -44,19 +44,23 @@
                 {{ stock.shortName }}
             </td>
             <td>
-                {{ stock.price }}
+                ${{ '%.2f' | format(stock.price|round(2)) }}
             </td>
             <td>
-                {{ stock.trailingAnnualDividendYield }}
+                {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
             </td>
             <td>
-                {{ stock.marketCap }}
+                ${{ '%.4f'|format(stock.marketCap/1000000000) }}
             </td>
             <td>
-                {{ stock.forwardPE }}
+                {{ '%.4f'|format(stock.forwardPE) }}
             </td>
             <td>
-                {{ stock.beta }}
+                {% if stock.beta is not none %}
+                    {{ '%.2f'|format(stock.beta) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
                 {{ stock.smallDog }}

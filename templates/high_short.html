@@ -47,22 +47,30 @@
                 {{ stock.shortName }}
             </td>
             <td>
-                {{ stock.price }}
+                ${{ '%.2f'|format(stock.price) }}
             </td>
             <td>
-                {{ stock.presShortPercentFloat }}
+                {{ '%.2f'|format(stock.presShortPercentFloat*100) }}%
             </td>
             <td>
-                {{ stock.fiftyTwoWeekLow }}
+                ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
             </td>
             <td>
-                {{ stock.fiftyTwoWeekHigh }}
+                ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
             </td>
             <td>
-                {{ stock.beta }}
+                {% if stock is not none and stock.beta is not none %}
+                    {{ '%.2f'|format(stock.beta) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
-                {{ stock.forwardEps }}
+                {% if stock is not none and stock.forwardEps is not none %}
+                    {{ '%.2f'|format(stock.forwardEps) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
             </td>
             <td>
                 {{ stock.industry }}
