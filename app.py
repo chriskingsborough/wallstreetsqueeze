@@ -219,7 +219,7 @@ def high_dividend_sans_reit():
     stocks = db.session.query(
         HighDividendSansReit
     ).filter(
-        HighDividend.marketCap > 500000000
+        HighDividendSansReit.marketCap > 500000000
     ).limit(25).all()
     date = fetch_refresh_date()
     title = 'High Dividend Stocks excluding REITs'
