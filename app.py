@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, Markup
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -392,6 +392,8 @@ def fetch_refresh_date():
     res = db.session.query(func.max(IndexPrices.date)).one()
     dt = res[0]
     if dt:
+        # subtract a day because of the UTC offset
+        dt = dt - timedelta(days=1)
         formatted_date = datetime.strftime(dt, '%B %-d, %Y')
     else:
         formatted_date = ""
