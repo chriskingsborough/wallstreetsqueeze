@@ -108,7 +108,7 @@ def small_cap():
     text = Markup(
         """The S&P 600 SmallCap index seeks to track the performance of small cap
         US companies. To be included, a consituent must have a market cap between
-        $700 million and $3.2 billion at time of addition.
+        $700 million and $3.2 billion at time of addition.</p>
         """
     )
     stocks = fetch_stocks("S&P 600")
@@ -134,8 +134,8 @@ def high_short():
 
     text = Markup(
         """<p>The High Short Interest collection contains stocks which have a significantly high
-        short interest ratio. For this collection, stock were identified which have a short interest
-        ratio greater than 10% of outstanding shares and 20% of floating shares.<br>
+        short interest ratio. High short interest stocks were identified by filtering for short interest
+        ratios greater than 10% of outstanding shares and 20% of floating shares.<br>
         Stocks with high short interest ratios are known for explosive upside movies due to
         short squeezes. A short squeeze is where a stock sees rapid upwards price pressure due
         to short sellers being forced to cover their shorts. The most famous example of this is
@@ -186,6 +186,8 @@ def high_dividend():
 
     stocks = db.session.query(
         HighDividend
+    ).filter(
+        HighDividend.marketCap > 500000000
     ).limit(25).all()
     date = fetch_refresh_date()
     title = 'High Dividend Stocks'
@@ -216,6 +218,8 @@ def high_dividend_sans_reit():
 
     stocks = db.session.query(
         HighDividendSansReit
+    ).filter(
+        HighDividend.marketCap > 500000000
     ).limit(25).all()
     date = fetch_refresh_date()
     title = 'High Dividend Stocks excluding REITs'
@@ -253,8 +257,9 @@ def runners():
         <p>
         The Runners collection contains stocks which are above both their 50 and 200 day moving averages, and
         where the 50 day moving average is higher than the 200 day moving average. This collection
-        provide insight into which stocks are moving higher. Some investors believe stocks that are on
-        a run will continue to move higher. <br/>
+        provides insight into which stocks are moving higher. Some investors believe stocks that are on
+        a run will continue to go up. Of course, they could also go the other way and
+        retreat back towards their long term averages.<br/>
         Please note, while we do our best to provide accurate information, you should always double check
         and verify this information yourself prior to making any investment decisions.
         </p>
@@ -282,7 +287,7 @@ def dippers():
         """
         <p>
         The Dippers collection contains stocks which are below both their 50 and 200 day moving averages.
-        This collection provide insight into which stocks are currently dipping.
+        This collection provides insight into which stocks are currently dipping.
         For some stocks, this may represent a good buying opportunity, before the
         price moves higher again. On the other hand, there may be a fundamental issue
         dragging the stock price lower, and it may continue to lose value. <br/>
