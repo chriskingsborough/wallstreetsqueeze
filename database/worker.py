@@ -95,21 +95,6 @@ def find_removed():
     finally:
         conn.close()
 
-# def write_ticker_info(ticker):
-#     """Get info from yfinance and write to database"""
-#
-#     try:
-#         # get ps connection details
-#         conn = get_conn()
-#         cur = conn.cursor()
-#
-#         # get the info from yfinance
-#         # parse out info
-#
-#         # write to db
-#         # delete ticker with older date
-
-
 def write_ticker_to_db(ticker, collection):
 
     # get ps connection details

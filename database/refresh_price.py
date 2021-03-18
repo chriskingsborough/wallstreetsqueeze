@@ -19,6 +19,14 @@ def refresh_price():
             retry=Retry(3),
             result_ttl=5000
         )
+    # after all updates are added to the queue
+    # add the bad price check
+    q.enqueue_call(
+        func=si.find_bad_updates,
+        args=None,
+        retry=Retry(3),
+        result_ttl=5000
+    )
 
 if __name__ == '__main__':
     refresh_price()

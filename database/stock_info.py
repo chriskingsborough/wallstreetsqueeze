@@ -266,3 +266,66 @@ def get_all_tickers():
         conn.close()
 
     return tickers
+
+def find_bad_updates():
+    ticker = ''
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+
+        find_bad_updates_sql = """
+        select
+            sp.ticker,
+            case
+                when
+                    sp.price > (si."fiftyTwoWeekHigh" * 1.5)
+                        then 1
+                when
+                    sp.price < (si."fiftyTwoWeekLow" * .5)
+                        then 1
+                    else 0
+            end high_price_variance
+        from stock_prices sp
+        inner join stock_info si
+            on sp.ticker = si.ticker
+        where (sp.price > (si."fiftyTwoWeekHigh" * 1.5)) or (sp.price < (si."fiftyTwoWeekLow" * .5))
+        """
+
+        cur.execute(find_bad_updates_sql)
+        res = cur.fetchall()
+
+        for row in res:
+            ticker = row[0]
+            yticker = yfinance.Ticker(ticker)
+
+            info = yticker.get_info()
+            price = info.get('previousClose')
+            volume = info.get('volume')
+            print(ticker)
+            delete_sql = """
+            DELETE FROM stock_prices
+            WHERE ticker = %s;
+            """
+            cur.execute(
+                delete_sql,
+                (ticker,)
+            )
+            conn.commit()
+
+            sql = """
+            INSERT INTO stock_prices
+            (ticker, last_updated, price, volume)
+            VALUES(%s, NOW(), %s, %s);
+            """
+
+            cur.execute(
+                sql,
+                (ticker, price, volume)
+            )
+            conn.commit()
+    except Exception as e:
+        print(e)
+        log_failure(ticker, 'stock_prices', 'Fix bad price', e)
+    finally:
+        conn.commit()
+        conn.close()
