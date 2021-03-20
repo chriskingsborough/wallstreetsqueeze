@@ -1,0 +1,11 @@
+- name: runners
+  limit: 100
+- name: dippers
+  limit: 100
+
+
+# read all tickers from the view
+
+# read all tickers from the collections table for the view
+
+#
