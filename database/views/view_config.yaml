@@ -2,10 +2,15 @@
   limit: 100
 - name: dippers
   limit: 100
-
-
-# read all tickers from the view
-
-# read all tickers from the collections table for the view
-
-#
+- name: price_range_high
+  limit: 50
+- name: price_range_low
+  limit: 50
+- name: high_short
+  limit: 200
+- name: high_dividend
+  limit: 25
+- name: high_dividend_sans_reit
+  limit: 25
+- name: dogs_of_the_dow
+  limit: 10
