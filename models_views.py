@@ -52,6 +52,7 @@ class HighDividend(db.Model):
     sector = db.Column(db.String())
     industry = db.Column(db.String())
     trailingAnnualDividendYield = db.Column(REAL)
+    trailingAnnualDividendRate = db.Column(REAL)
     forwardPE = db.Column(REAL)
     beta = db.Column(REAL)
 
@@ -67,6 +68,7 @@ class HighDividendSansReit(db.Model):
     sector = db.Column(db.String())
     industry = db.Column(db.String())
     trailingAnnualDividendYield = db.Column(REAL)
+    trailingAnnualDividendRate = db.Column(REAL)
     forwardPE = db.Column(REAL)
     beta = db.Column(REAL)
 
@@ -151,3 +153,60 @@ class PriceRangeHigh(db.Model):
     fiftyDayAverage = db.Column(REAL)
     twoHundredDayAverage = db.Column(REAL)
     priceToSalesTrailing12Months = db.Column(REAL)
+
+class PEUnderFifteen(db.Model):
+    """PE Under Fifteen"""
+
+    __tablename__ = 'pe_under_fifteen'
+
+    ticker = db.Column(db.String(), primary_key=True)
+    shortName = db.Column(db.String())
+    longName = db.Column(db.String())
+    price = db.Column(REAL)
+    marketCap = db.Column(REAL)
+    sector = db.Column(db.String())
+    industry = db.Column(db.String())
+    trailingAnnualDividendYield = db.Column(REAL)
+    forwardPE = db.Column(REAL)
+    priceToBook = db.Column(REAL)
+    pegRatio = db.Column(REAL)
+    forwardEps = db.Column(REAL)
+    beta = db.Column(REAL)
+
+class PBUnderOne(db.Model):
+    """PB Under Fifteen"""
+
+    __tablename__ = 'pb_under_one'
+
+    ticker = db.Column(db.String(), primary_key=True)
+    shortName = db.Column(db.String())
+    longName = db.Column(db.String())
+    price = db.Column(REAL)
+    marketCap = db.Column(REAL)
+    sector = db.Column(db.String())
+    industry = db.Column(db.String())
+    trailingAnnualDividendYield = db.Column(REAL)
+    forwardPE = db.Column(REAL)
+    priceToBook = db.Column(REAL)
+    pegRatio = db.Column(REAL)
+    forwardEps = db.Column(REAL)
+    beta = db.Column(REAL)
+
+class PEGUnderOne(db.Model):
+    """PEG Under Fifteen"""
+
+    __tablename__ = 'peg_under_one'
+
+    ticker = db.Column(db.String(), primary_key=True)
+    shortName = db.Column(db.String())
+    longName = db.Column(db.String())
+    price = db.Column(REAL)
+    marketCap = db.Column(REAL)
+    sector = db.Column(db.String())
+    industry = db.Column(db.String())
+    trailingAnnualDividendYield = db.Column(REAL)
+    forwardPE = db.Column(REAL)
+    priceToBook = db.Column(REAL)
+    pegRatio = db.Column(REAL)
+    forwardEps = db.Column(REAL)
+    beta = db.Column(REAL)

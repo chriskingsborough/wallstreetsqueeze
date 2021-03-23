@@ -120,6 +120,7 @@ def high_dividend():
     #     -- exDividendDate
     # -- check feasibility of exDividendDate within last year
     sql = """
+    drop view if exists high_dividend;
     create or replace view high_dividend as
     select
         si.ticker,
@@ -129,6 +130,7 @@ def high_dividend():
         si.sector,
         si.industry,
         si."trailingAnnualDividendYield",
+        si."trailingAnnualDividendRate",
         si."forwardPE",
         si.beta
     from stock_info si
@@ -137,6 +139,7 @@ def high_dividend():
     where si."dividendYield" is not null
         and si."trailingAnnualDividendYield" is not null
         and si."exDividendDate" is not null
+        and si."marketCap" > 500000000
     order by si."trailingAnnualDividendYield" desc
     ;"""
 
@@ -145,6 +148,7 @@ def high_dividend():
 def high_dividend_sans_reit():
 
     sql = """
+    drop view if exists high_dividend_sans_reit;
     create or replace view high_dividend_sans_reit as
     select
         si.ticker,
@@ -154,6 +158,7 @@ def high_dividend_sans_reit():
         si.sector,
         si.industry,
         si."trailingAnnualDividendYield",
+        si."trailingAnnualDividendRate",
         si."forwardPE",
         si.beta
     from stock_info si
@@ -163,6 +168,7 @@ def high_dividend_sans_reit():
         and si."trailingAnnualDividendYield" is not null
         and si."exDividendDate" is not null
         and si.industry not like 'REIT%'
+        and si."marketCap" > 500000000
     order by si."trailingAnnualDividendYield" desc
     ;"""
 
@@ -301,6 +307,92 @@ def price_range_high():
 
     return sql
 
+def pe_under_15():
+
+    sql = """
+    DROP VIEW IF EXISTS pe_under_fifteen;
+    CREATE OR REPLACE VIEW pe_under_fifteen AS
+    SELECT si.ticker,
+        si."shortName",
+        si."longName",
+        sp.price,
+        si."marketCap",
+        si.sector,
+        si.industry,
+        si."trailingAnnualDividendYield",
+        si."forwardPE",
+        si."priceToBook",
+        si."pegRatio",
+        si."forwardEps",
+        si.beta
+    FROM stock_info si
+         JOIN stock_prices sp ON si.ticker::text = sp.ticker::text
+    where si."forwardPE" between 0 and 15
+    	and si."forwardPE" is not null
+    order by "marketCap" desc
+    limit 100
+    """
+
+    return sql
+
+def pb_under_one():
+
+    sql = """
+    DROP VIEW IF EXISTS pb_under_one;
+    CREATE OR REPLACE VIEW pb_under_one AS
+    SELECT si.ticker,
+        si."shortName",
+        si."longName",
+        sp.price,
+        si."marketCap",
+        si.sector,
+        si.industry,
+        si."trailingAnnualDividendYield",
+        si."forwardPE",
+        si."priceToBook",
+        si."pegRatio",
+        si."forwardEps",
+        si.beta
+    FROM stock_info si
+         JOIN stock_prices sp ON si.ticker::text = sp.ticker::text
+    where si."priceToBook" between 0.01 and 1.0
+    	and si."priceToBook" is not null
+    order by si."marketCap" desc
+    limit 100
+    ;
+    """
+
+    return sql
+
+def peg_under_one():
+
+    sql = """
+    DROP VIEW IF EXISTS peg_under_one;
+    CREATE OR REPLACE VIEW peg_under_one AS
+    SELECT si.ticker,
+        si."shortName",
+        si."longName",
+        sp.price,
+        si."marketCap",
+        si.sector,
+        si.industry,
+        si."trailingAnnualDividendYield",
+        si."forwardPE",
+        si."priceToBook",
+        si."pegRatio",
+        si."forwardEps",
+        si.beta
+       FROM stock_info si
+         JOIN stock_prices sp ON si.ticker::text = sp.ticker::text
+    where si."pegRatio" between 0.01 and 1.0
+    	and si."pegRatio" is not null
+    order by "marketCap" desc
+    limit 100
+    ;
+    """
+
+    return sql
+
 def _others():
 
     """-- Price to book ratio under 1
@@ -375,3 +467,6 @@ if __name__ == '__main__':
     create_view(dippers())
     create_view(price_range_low())
     create_view(price_range_high())
+    create_view(pe_under_15())
+    create_view(pb_under_one())
+    create_view(peg_under_one())
