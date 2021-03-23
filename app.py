@@ -361,6 +361,77 @@ def fifty_two_week_low():
         refresh_date=date
     )
 
+@app.route('/pe_under_fifteen')
+def pe_under_fifteen():
+
+    stocks = db.session.query(
+        PEUnderFifteen
+    ).limit(25).all()
+    date = fetch_refresh_date()
+    title = 'PE Under Fifteen'
+
+    text = Markup(
+        """
+        """
+    )
+
+    return render_template(
+        'value_stocks.html',
+        title=title,
+        text=text,
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/pb_under_one')
+def pb_under_one():
+
+    stocks = db.session.query(
+        PBUnderOne
+    ).limit(25).all()
+    date = fetch_refresh_date()
+    title = 'Price to Book Under One'
+
+    text = Markup(
+        """
+        """
+    )
+
+    return render_template(
+        'value_stocks.html',
+        title=title,
+        text=text,
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/peg_under_one')
+def peg_under_one():
+
+    stocks = db.session.query(
+        PEGUnderOne
+    ).limit(25).all()
+    date = fetch_refresh_date()
+    title = 'PEG Ratio Under One'
+
+    text = Markup(
+        """
+        """
+    )
+
+    return render_template(
+        'value_stocks.html',
+        title=title,
+        text=text,
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/<ticker>')
+def stock_page(ticker):
+
+    return f"Individual Page for {ticker}"
+
 def fetch_index_prices():
 
     subquery = db.session.query(func.max(IndexPrices.date)).subquery()

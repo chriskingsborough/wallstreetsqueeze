@@ -25,13 +25,19 @@
             Dividend Yield
         </th>
         <th>
-            Annual Dividend
-        </th>
-        <th>
             Market Cap (billions)
         </th>
         <th>
             PE Ratio
+        </th>
+        <th>
+            PEG Ratio
+        </th>
+        <th>
+            Price to Book
+        </th>
+        <th>
+            Forward EPS
         </th>
         <th>
             Beta
@@ -46,7 +52,7 @@
                 {{ stock.ticker }}
             </td>
             <td>
-                {{ stock.shortName }}
+                {{ stock.longName }}
             </td>
             <td>
                 ${{ '%.2f'|format(stock.price) }}
@@ -54,13 +60,6 @@
             <td>
                 {% if stock is not none and stock.trailingAnnualDividendYield is not none %}
                     {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-            <td>
-                {% if stock is not none and stock.trailingAnnualDividendRate is not none %}
-                    ${{ '%.2f'|format((stock.trailingAnnualDividendRate)) }}
                 {% else %}
                     {{ '' }}
                 {% endif %}
@@ -75,6 +74,27 @@
             <td>
                 {% if stock is not none and stock.forwardPE is not none %}
                     {{ '%.2f'|format(stock.forwardPE) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
+            </td>
+            <td>
+                {% if stock is not none and stock.pegRatio is not none %}
+                    {{ '%.2f'|format(stock.pegRatio) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
+            </td>
+            <td>
+                {% if stock is not none and stock.priceToBook is not none %}
+                    {{ '%.2f'|format(stock.priceToBook) }}
+                {% else %}
+                    {{ '' }}
+                {% endif %}
+            </td>
+            <td>
+                {% if stock is not none and stock.forwardEps is not none %}
+                    {{ '%.2f'|format(stock.forwardEps) }}
                 {% else %}
                     {{ '' }}
                 {% endif %}
