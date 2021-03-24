@@ -393,6 +393,52 @@ def peg_under_one():
 
     return sql
 
+def stock_basics():
+
+    sql = """
+    DROP VIEW IF EXISTS stock_basics;
+    CREATE OR REPLACE VIEW stock_basics AS
+    SELECT si.ticker,
+        si."shortName",
+        si."longName",
+        si."longBusinessSummary",
+        si."logo_url",
+        si.sector,
+        si.industry,
+        si.state,
+        si.country ,
+        si.website ,
+        sp.price,
+        si."fiftyTwoWeekLow",
+        si."fiftyTwoWeekHigh",
+        si."fiftyDayAverage",
+        si."twoHundredDayAverage",
+        si."marketCap",
+        si."trailingAnnualDividendYield",
+        si."trailingAnnualDividendRate",
+        si."floatShares" ,
+        si."sharesOutstanding" ,
+        si."lastDividendDate" ,
+        si."lastDividendValue" ,
+        si."exDividendDate",
+        si."trailingPE",
+        si."forwardPE",
+        si."priceToBook",
+        si."pegRatio",
+        si."trailingEps",
+        si."forwardEps",
+        si.beta,
+        COALESCE(hs."presShortPercentFloat", si."shortPercentOfFloat", 0) as "shortPercentOfFloat",
+        si."priceToSalesTrailing12Months",
+        si."profitMargins",
+        si."earningsQuarterlyGrowth"
+    FROM stock_info si
+    JOIN stock_prices sp ON si.ticker::text = sp.ticker::text
+    LEFT JOIN
+        high_short hs ON si.ticker::text = hs.ticker::text
+    ;
+    """
+
 def _others():
 
     """-- Price to book ratio under 1
