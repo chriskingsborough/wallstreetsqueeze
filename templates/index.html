@@ -30,45 +30,46 @@
     </p>
 </div>
 
-<table id="indexTable">
-    <tr>
-        <th>
-            Index
-        </th>
-        <th>
-            Symbol
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            $ Change
-        </th>
-        <th>
-            % Change
-        </th>
-    </tr>
-
-    {% for index in indexes %}
+<div class="table-responsive">
+    <table class="table">
         <tr>
-            <td>
-                {{ index.name }}
-            </td>
-            <td>
-                {{ index.ticker }}
-            </td>
-            <td>
-                ${{ index.close }}
-            </td>
-            <td>
-                ${{ index.dollar_change|round(2) }}
-            </td>
-            <td>
-                {{ (index.decimal_change * 100)|round(4)}}%
-            </td>
+            <th>
+                Index
+            </th>
+            <th>
+                Symbol
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                $ Change
+            </th>
+            <th>
+                % Change
+            </th>
         </tr>
-    {% endfor %}
 
-</table>
+        {% for index in indexes %}
+            <tr>
+                <td>
+                    {{ index.name }}
+                </td>
+                <td>
+                    {{ index.ticker }}
+                </td>
+                <td>
+                    ${{ index.close }}
+                </td>
+                <td>
+                    ${{ index.dollar_change|round(2) }}
+                </td>
+                <td>
+                    {{ (index.decimal_change * 100)|round(4)}}%
+                </td>
+            </tr>
+        {% endfor %}
 
+    </table>
+</div>
 {% endblock %}

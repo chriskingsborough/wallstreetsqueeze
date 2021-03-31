@@ -14,3 +14,9 @@
   limit: 25
 - name: dogs_of_the_dow
   limit: 10
+- name: pe_under_fifteen
+  limit: 25
+- name: pb_under_one
+  limit: 25
+- name: peg_under_one
+  limit: 25

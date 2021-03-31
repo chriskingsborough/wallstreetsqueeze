@@ -6,7 +6,7 @@ def high_short():
     # -- short percent outstanding > 10%
     # -- short percent float > 20%
     sql = """
-    drop view if exists high_short;
+    drop view if exists high_short cascade;
     create or replace view high_short as
     select
             s."ticker",
@@ -429,6 +429,8 @@ def stock_basics():
         si."forwardEps",
         si.beta,
         COALESCE(hs."presShortPercentFloat", si."shortPercentOfFloat", 0) as "shortPercentOfFloat",
+        si."sharesShort",
+        si."sharesShortPriorMonth",
         si."priceToSalesTrailing12Months",
         si."profitMargins",
         si."earningsQuarterlyGrowth"
@@ -438,6 +440,8 @@ def stock_basics():
         high_short hs ON si.ticker::text = hs.ticker::text
     ;
     """
+
+    return sql
 
 def _others():
 
@@ -516,3 +520,4 @@ if __name__ == '__main__':
     create_view(pe_under_15())
     create_view(pb_under_one())
     create_view(peg_under_one())
+    create_view(stock_basics())
