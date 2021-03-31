@@ -1,85 +1,99 @@
 <!doctype>
 <head>
+    <!-- BOOTSTRAP FILES -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- LOCAL CSS FILES -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
     <script type=text/javascript src="{{
   url_for('static', filename='js/main.js') }}"></script>
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" sizes="16x16" />
   <script data-ad-client="ca-pub-7038445764325356" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <title>
+      Wall Street Squeeze
+  </title>
 </head>
 <body>
-    <title>
-        Wall Street Squeeze
-    </title>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <!-- <li><a href="/large_cap">S&P 500</a></li> -->
-        <div class="dropdown">
-            <button class="dropbtn">Large Cap
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="/s_and_p_500">S&P 500</a>
-                <a href="/dow_jones">Dow Jones</a>
-                <a href="/nasdaq">Nasdaq 100</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Mid & Small Cap
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="/medium_cap">Medium Cap</a>
-                <a href="/small_cap">Small Cap</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Fundamental Collections
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="/dogs_of_the_dow">Dogs of the Dow</a>
-                <a href="/high_short">High Short Interest</a>
-                <a href="/high_dividend">High Dividend</a>
-                <a href="/high_dividend_no_reit">High Dividend ex REITs</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Momentum Collections
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="/runners">Runners</a>
-                <a href="/dippers">Dippers</a>
-                <a href="/52_week_high">Price Range High</a>
-                <a href="/52_week_low">Price Range Low</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Value Collections
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="/pe_under_fifteen">PE Under 15</a>
-                <a href="/pb_under_one">Price to Book</a>
-                <a href="/peg_under_one">PEG Ratio</a>
-            </div>
-        </div>
-        <!-- <li><a href="/high_short">High Short Interest</a></li> -->
-        <li style="float:right">
-            <a href="/">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">Wall Street Squeeze</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-                Wall Street Squeeze
-                <!-- <img src={{
-                  url_for('static', filename='images/orange.png') }} alt="cartoon orange" width="1%"
-                > -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Indexes
             </a>
-        </li>
-    </ul>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/s_and_p_500">S&P 500</a>
+              <a class="dropdown-item" href="/dow_jones">Dow Jones</a>
+              <a class="dropdown-item" href="/nasdaq">Nasdaq 100</a>
+              <a class="dropdown-item" href="/medium_cap">Medium Cap</a>
+              <a class="dropdown-item" href="/small_cap">Small Cap</a>
+            </div>
+          </li>
+          <li class="nav-item disabled">
+            <a class="nav-link" href="#">Collections <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Fundamental
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/dogs_of_the_dow">Dogs of the Dow</a>
+              <a class="dropdown-item" href="/high_short">High Short Interest</a>
+              <a class="dropdown-item" href="/high_dividend">High Dividend</a>
+              <a class="dropdown-item" href="/high_dividend_no_reit">High Dividend sans REITs</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Momentum
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/runners">Above Averages</a>
+              <a class="dropdown-item" href="/dippers">Below Averages</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/52_week_high">Price Range High</a>
+              <a class="dropdown-item" href="/52_week_low">Price Range Low</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Value
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/pe_under_fifteen">PE Under 15</a>
+              <a class="dropdown-item" href="/pb_under_one">Price to Book</a>
+              <a class="dropdown-item" href="/peg_under_one">PEG Ratio</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
     {% block content %}
     {% endblock %}
 
     <footer>
-        Last refreshed {{refresh_date}}
+        {% if refresh_date is not none and refresh_date != '' %}
+            Last refreshed {{refresh_date or ''}}
+        {% else %}
+            {{ '' }}
+        {% endif %}
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 </body>

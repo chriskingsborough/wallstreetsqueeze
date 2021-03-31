@@ -11,75 +11,77 @@
 
 <input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
 
-<table id="stockTable">
-    <tr>
-        <th>
-            Symbol
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Previous Close
-        </th>
-        <th>
-            Short Interest
-        </th>
-        <th>
-            52 Week Low
-        </th>
-        <th>
-            52 Week High
-        </th>
-        <th>
-            Beta
-        </th>
-        <th>
-            Earnings per Share
-        </th>
-        <th>
-            Industry
-        </th>
-    </tr>
-    {% for stock in stock_data %}
+<div class="table-responsive">
+    <table class="table">
         <tr>
-            <td>
-                {{ stock.ticker }}
-            </td>
-            <td>
-                {{ stock.shortName }}
-            </td>
-            <td>
-                ${{ '%.2f'|format(stock.price) }}
-            </td>
-            <td>
-                {{ '%.2f'|format(stock.presShortPercentFloat*100) }}%
-            </td>
-            <td>
-                ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
-            </td>
-            <td>
-                ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
-            </td>
-            <td>
-                {% if stock is not none and stock.beta is not none %}
-                    {{ '%.2f'|format(stock.beta) }}
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-            <td>
-                {% if stock is not none and stock.forwardEps is not none %}
-                    {{ '%.2f'|format(stock.forwardEps) }}
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-            <td>
-                {{ stock.industry }}
-            </td>
+            <th>
+                Symbol
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Previous Close
+            </th>
+            <th>
+                Short Interest
+            </th>
+            <th>
+                52 Week Low
+            </th>
+            <th>
+                52 Week High
+            </th>
+            <th>
+                Beta
+            </th>
+            <th>
+                Earnings per Share
+            </th>
+            <th>
+                Industry
+            </th>
         </tr>
-    {% endfor %}
-</table>
+        {% for stock in stock_data %}
+            <tr>
+                <td>
+                    <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
+                </td>
+                <td>
+                    {{ stock.shortName }}
+                </td>
+                <td>
+                    ${{ '%.2f'|format(stock.price) }}
+                </td>
+                <td>
+                    {{ '%.2f'|format(stock.presShortPercentFloat*100) }}%
+                </td>
+                <td>
+                    ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
+                </td>
+                <td>
+                    ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
+                </td>
+                <td>
+                    {% if stock is not none and stock.beta is not none %}
+                        {{ '%.2f'|format(stock.beta) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if stock is not none and stock.forwardEps is not none %}
+                        {{ '%.2f'|format(stock.forwardEps) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ stock.industry }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
 
 {% endblock %}

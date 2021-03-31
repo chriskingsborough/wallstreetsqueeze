@@ -430,7 +430,33 @@ def peg_under_one():
 @app.route('/<ticker>')
 def stock_page(ticker):
 
-    return f"Individual Page for {ticker}"
+
+    stock = db.session.query(
+        StockBasics
+    ).filter(
+        StockBasics.ticker == ticker
+    ).one()
+
+    collections = db.session.query(
+        Collections
+    ).filter(
+        Collections.ticker == ticker
+    ).all()
+
+    _collections = [c.collection for c in collections]
+
+    # TODO: might make sense to just pass the list
+    collection_string = ', '.join(_collections)
+
+    if stock is None:
+        return f"""404: Unable to find ticker {ticker}"""
+
+    return render_template(
+        'stock_info.html',
+        stock=stock,
+        collections=collection_string,
+        refresh_date=None
+    )
 
 def fetch_index_prices():
 

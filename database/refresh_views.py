@@ -6,7 +6,7 @@ def high_short():
     # -- short percent outstanding > 10%
     # -- short percent float > 20%
     sql = """
-    drop view if exists high_short;
+    drop view if exists high_short cascade;
     create or replace view high_short as
     select
             s."ticker",
@@ -393,6 +393,56 @@ def peg_under_one():
 
     return sql
 
+def stock_basics():
+
+    sql = """
+    DROP VIEW IF EXISTS stock_basics;
+    CREATE OR REPLACE VIEW stock_basics AS
+    SELECT si.ticker,
+        si."shortName",
+        si."longName",
+        si."longBusinessSummary",
+        si."logo_url",
+        si.sector,
+        si.industry,
+        si.state,
+        si.country ,
+        si.website ,
+        sp.price,
+        si."fiftyTwoWeekLow",
+        si."fiftyTwoWeekHigh",
+        si."fiftyDayAverage",
+        si."twoHundredDayAverage",
+        si."marketCap",
+        si."trailingAnnualDividendYield",
+        si."trailingAnnualDividendRate",
+        si."floatShares" ,
+        si."sharesOutstanding" ,
+        si."lastDividendDate" ,
+        si."lastDividendValue" ,
+        si."exDividendDate",
+        si."trailingPE",
+        si."forwardPE",
+        si."priceToBook",
+        si."pegRatio",
+        si."trailingEps",
+        si."forwardEps",
+        si.beta,
+        COALESCE(hs."presShortPercentFloat", si."shortPercentOfFloat", 0) as "shortPercentOfFloat",
+        si."sharesShort",
+        si."sharesShortPriorMonth",
+        si."priceToSalesTrailing12Months",
+        si."profitMargins",
+        si."earningsQuarterlyGrowth"
+    FROM stock_info si
+    JOIN stock_prices sp ON si.ticker::text = sp.ticker::text
+    LEFT JOIN
+        high_short hs ON si.ticker::text = hs.ticker::text
+    ;
+    """
+
+    return sql
+
 def _others():
 
     """-- Price to book ratio under 1
@@ -470,3 +520,4 @@ if __name__ == '__main__':
     create_view(pe_under_15())
     create_view(pb_under_one())
     create_view(peg_under_one())
+    create_view(stock_basics())
