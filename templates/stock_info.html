@@ -4,247 +4,248 @@
 
 {% block content %}
 
-<div class="stock-info">
+<div class="container">
     <img src="{{ stock.logo_url }}" alt="{{stock.ticker}} logo" />
     <h1><a href={{ stock.website }} target="_blank" style="color:black; text-decoration:none;">{{stock.longName}}</a></h1>
     <h3>Current Price: ${{stock.price}}</h3>
     <p>{{stock.longBusinessSummary}}</p>
 
-    <table>
-        <tr>
-            <td colspan="2">
-                <strong>Basics</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Market Cap (billions)
-            </td>
-            <td>
-                {{ "${:,.0f}".format(stock.marketCap/1000000000 or 0.0) }}B
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Sector
-            </td>
-            <td>
-                {{ stock.sector }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Industry
-            </td>
-            <td>
-                {{ stock.industry }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                52 Week Low
-            </td>
-            <td>
-                ${{ stock.fiftyTwoWeekLow }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                52 Week High
-            </td>
-            <td>
-                ${{ stock.fiftyTwoWeekHigh }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Fifty Day Average
-            </td>
-            <td>
-                ${{ stock.fiftyDayAverage }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Two Hundred Day Average
-            </td>
-            <td>
-                ${{ stock.twoHundredDayAverage }}
-            </td>
-        </tr>
-        <!-- Shares -->
-        <tr>
-            <td colspan="2">
-                <strong>Shares</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Floating Shares
-            </td>
-            <td>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <td colspan="2">
+                    <strong>Basics</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Market Cap (billions)
+                </td>
+                <td>
+                    {{ "${:,.0f}".format(stock.marketCap/1000000000 or 0.0) }}B
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Sector
+                </td>
+                <td>
+                    {{ stock.sector }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Industry
+                </td>
+                <td>
+                    {{ stock.industry }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    52 Week Low
+                </td>
+                <td>
+                    ${{ stock.fiftyTwoWeekLow }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    52 Week High
+                </td>
+                <td>
+                    ${{ stock.fiftyTwoWeekHigh }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fifty Day Average
+                </td>
+                <td>
+                    ${{ stock.fiftyDayAverage }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Two Hundred Day Average
+                </td>
+                <td>
+                    ${{ stock.twoHundredDayAverage }}
+                </td>
+            </tr>
+            <!-- Shares -->
+            <tr>
+                <td colspan="2">
+                    <strong>Shares</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Floating Shares
+                </td>
+                <td>
 
-                {{ "{:,.0f}".format(stock.floatShares or '') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Outstanding Shares
-            </td>
-            <td>
-                {{ "{:,.0f}".format(stock.sharesOutstanding or '') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Shares Short
-            </td>
-            <td>
-                {{ "{:,.0f}".format(stock.sharesShort or '') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Shares Short Previous Month
-            </td>
-            <td>
-                {{ "{:,.0f}".format(stock.sharesShortPriorMonth or '') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Short Percent of Float
-            </td>
-            <td>
-                {{ "{:.2f}%".format((stock.shortPercentOfFloat or 0)* 100)  }}
-            </td>
-        </tr>
-        <!-- Fundaments -->
-        <tr>
-            <td colspan="2">
-                <strong>Fundamentals</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Beta
-            </td>
-            <td>
-                {% if stock.beta is not none %}
-                    {{ "{:.2f}".format(stock.beta) }}
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Trailing Annual Dividend Yield
-            </td>
-            <td>
-                {% if stock.trailingAnnualDividendYield is not none %}
-                    {{ "{:.2f}%".format(stock.trailingAnnualDividendYield or 0) }}
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Trailing Annual Dividend Rate
-            </td>
-            <td>
-                {% if stock.trailingAnnualDividendRate is not none %}
-                    {{ "${:.2f}".format(stock.trailingAnnualDividendRate or 0) }}
-                {% else %}
-                    {{ '' }}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Trailing PE Ratio
-            </td>
-            <td>
-                {{ stock.trailingPE or ''}}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Forward PE Ratio
-            </td>
-            <td>
-                {{ stock.forwardPE }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Trailing EPS
-            </td>
-            <td>
-                {{ stock.trailingEps }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Forward EPS
-            </td>
-            <td>
-                {{ stock.forwardEps }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                PEG Ratio
-            </td>
-            <td>
-                {{ stock.pegRatio }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Price to Book Ratio
-            </td>
-            <td>
-                {{ stock.priceToBook }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Price to Sales Ratio
-            </td>
-            <td>
-                {{ stock.priceToSalesTrailing12Months }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Profit Margin
-            </td>
-            <td>
-                {{ stock.profitMargins }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Earnings Quarterly Growth
-            </td>
-            <td>
-                {{ stock.earningsQuarterlyGrowth }}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                Collections
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                {{ collections }}
-            </td>
-        </tr>
-
-    </table>
+                    {{ "{:,.0f}".format(stock.floatShares or '') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Outstanding Shares
+                </td>
+                <td>
+                    {{ "{:,.0f}".format(stock.sharesOutstanding or '') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Shares Short
+                </td>
+                <td>
+                    {{ "{:,.0f}".format(stock.sharesShort or '') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Shares Short Previous Month
+                </td>
+                <td>
+                    {{ "{:,.0f}".format(stock.sharesShortPriorMonth or '') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Short Percent of Float
+                </td>
+                <td>
+                    {{ "{:.2f}%".format((stock.shortPercentOfFloat or 0)* 100)  }}
+                </td>
+            </tr>
+            <!-- Fundaments -->
+            <tr>
+                <td colspan="2">
+                    <strong>Fundamentals</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Beta
+                </td>
+                <td>
+                    {% if stock.beta is not none %}
+                        {{ "{:.2f}".format(stock.beta) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Trailing Annual Dividend Yield
+                </td>
+                <td>
+                    {% if stock.trailingAnnualDividendYield is not none %}
+                        {{ "{:.2f}%".format(stock.trailingAnnualDividendYield or 0) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Trailing Annual Dividend Rate
+                </td>
+                <td>
+                    {% if stock.trailingAnnualDividendRate is not none %}
+                        {{ "${:.2f}".format(stock.trailingAnnualDividendRate or 0) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Trailing PE Ratio
+                </td>
+                <td>
+                    {{ stock.trailingPE or ''}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Forward PE Ratio
+                </td>
+                <td>
+                    {{ stock.forwardPE }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Trailing EPS
+                </td>
+                <td>
+                    {{ stock.trailingEps }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Forward EPS
+                </td>
+                <td>
+                    {{ stock.forwardEps }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    PEG Ratio
+                </td>
+                <td>
+                    {{ stock.pegRatio }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Price to Book Ratio
+                </td>
+                <td>
+                    {{ stock.priceToBook }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Price to Sales Ratio
+                </td>
+                <td>
+                    {{ stock.priceToSalesTrailing12Months }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Profit Margin
+                </td>
+                <td>
+                    {{ stock.profitMargins }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Earnings Quarterly Growth
+                </td>
+                <td>
+                    {{ stock.earningsQuarterlyGrowth }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Collections
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ collections }}
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 
