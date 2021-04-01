@@ -144,7 +144,7 @@
                 </td>
                 <td>
                     {% if stock.trailingAnnualDividendYield is not none %}
-                        {{ "{:.2f}%".format(stock.trailingAnnualDividendYield or 0) }}
+                        {{ "{:.2f}%".format(stock.trailingAnnualDividendYield * 100) }}
                     {% else %}
                         {{ '' }}
                     {% endif %}
@@ -156,7 +156,7 @@
                 </td>
                 <td>
                     {% if stock.trailingAnnualDividendRate is not none %}
-                        {{ "${:.2f}".format(stock.trailingAnnualDividendRate or 0) }}
+                        {{ "${:.2f}".format(stock.trailingAnnualDividendRate) }}
                     {% else %}
                         {{ '' }}
                     {% endif %}
@@ -167,7 +167,11 @@
                     Trailing PE Ratio
                 </td>
                 <td>
-                    {{ stock.trailingPE or ''}}
+                    {% if stock.trailingPE is not none %}
+                        {{ "{:.2f}".format(stock.trailingPE) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -175,7 +179,11 @@
                     Forward PE Ratio
                 </td>
                 <td>
-                    {{ stock.forwardPE }}
+                    {% if stock.forwardPE is not none %}
+                        {{ "{:.2f}".format(stock.forwardPE) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -183,7 +191,11 @@
                     Trailing EPS
                 </td>
                 <td>
-                    {{ stock.trailingEps }}
+                    {% if stock.trailingEps is not none %}
+                        {{ "{:.2f}".format(stock.trailingEps) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -191,7 +203,11 @@
                     Forward EPS
                 </td>
                 <td>
-                    {{ stock.forwardEps }}
+                    {% if stock.forwardEps is not none %}
+                        {{ "{:.2f}".format(stock.forwardEps) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -199,7 +215,11 @@
                     PEG Ratio
                 </td>
                 <td>
-                    {{ stock.pegRatio }}
+                    {% if stock.pegRatio is not none %}
+                        {{ "{:.2f}".format(stock.pegRatio) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -207,7 +227,11 @@
                     Price to Book Ratio
                 </td>
                 <td>
-                    {{ stock.priceToBook }}
+                    {% if stock.priceToBook is not none %}
+                        {{ "{:.2f}".format(stock.priceToBook) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -215,7 +239,11 @@
                     Price to Sales Ratio
                 </td>
                 <td>
-                    {{ stock.priceToSalesTrailing12Months }}
+                    {% if stock.priceToSalesTrailing12Months is not none %}
+                        {{ "{:.2f}".format(stock.priceToSalesTrailing12Months) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -223,7 +251,11 @@
                     Profit Margin
                 </td>
                 <td>
-                    {{ stock.profitMargins }}
+                    {% if stock.profitMargins is not none %}
+                        {{ "{:.2f}%".format(stock.profitMargins * 100) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -231,12 +263,16 @@
                     Earnings Quarterly Growth
                 </td>
                 <td>
-                    {{ stock.earningsQuarterlyGrowth }}
+                    {% if stock.earningsQuarterlyGrowth is not none %}
+                        {{ "{:.2f}%".format(stock.earningsQuarterlyGrowth * 100) }}
+                    {% else %}
+                        {{''}}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    Collections
+                    <strong>Collections</strong>
                 </td>
             </tr>
             <tr>

@@ -250,12 +250,12 @@ def runners():
         Runners
     ).limit(50).all()
     date = fetch_refresh_date()
-    title = 'Runners'
+    title = 'Above Averages'
 
     text = Markup(
         """
         <p>
-        The Runners collection contains stocks which are above both their 50 and 200 day moving averages, and
+        This collection contains stocks which are above both their 50 and 200 day moving averages, and
         where the 50 day moving average is higher than the 200 day moving average. This collection
         provides insight into which stocks are moving higher. Some investors believe stocks that are on
         a run will continue to go up. Of course, they could also go the other way and
@@ -281,12 +281,12 @@ def dippers():
         Dippers
     ).limit(50).all()
     date = fetch_refresh_date()
-    title = 'Dippers'
+    title = 'Below Averages'
 
     text = Markup(
         """
         <p>
-        The Dippers collection contains stocks which are below both their 50 and 200 day moving averages.
+        This collection contains stocks which are below both their 50 and 200 day moving averages.
         This collection provides insight into which stocks are currently dipping.
         For some stocks, this may represent a good buying opportunity, before the
         price moves higher again. On the other hand, there may be a fundamental issue
@@ -443,10 +443,10 @@ def stock_page(ticker):
         Collections.ticker == ticker
     ).all()
 
-    _collections = [c.collection for c in collections]
+    _collections = [c.collection.replace('_', ' ').title() for c in collections]
 
     # TODO: might make sense to just pass the list
-    collection_string = ', '.join(_collections)
+    collections_string = ', '.join(_collections)
 
     if stock is None:
         return f"""404: Unable to find ticker {ticker}"""
@@ -454,7 +454,7 @@ def stock_page(ticker):
     return render_template(
         'stock_info.html',
         stock=stock,
-        collections=collection_string,
+        collections=collections_string,
         refresh_date=None
     )
 

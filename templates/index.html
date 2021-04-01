@@ -3,73 +3,75 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
+<div class="container">
 
-<div class="image">
-    <img src={{
-        url_for('static', filename='images/orange.png') }} alt="cartoon orange"
-        >
-</div>
+    <div class="image">
+        <img src={{
+            url_for('static', filename='images/orange.png') }} alt="cartoon orange"
+            >
+    </div>
 
-<div class="title">
-    <h1>
-          Wall Street Squeeze
-    </h1>
-</div>
+    <div class="title">
+        <h1>
+              Wall Street Squeeze
+        </h1>
+    </div>
 
-<div class="info">
-    <p>
-        How did you find your last stock? Our guess, if you're honest with yourself,
-        is it was probably by accident. Maybe a friend suggested it, maybe you heard it
-        in passing on a podcast, or maybe even on Reddit. At Wall Street Squeeze,
-        we think you can do better and we're here to help.
-    </p>
-    <p>
-        We're here to help you find better stock. We provide collections of stocks
-        based on fundamentals and momentum indicators. So next time you're ready to make
-        an investment decision, start with the data, not a tip from your friend from college.
-    </p>
-</div>
+    <div class="info">
+        <p>
+            How did you find your last stock? Our guess, if you're honest with yourself,
+            is it was probably by accident. Maybe a friend suggested it, maybe you heard it
+            in passing on a podcast, or maybe even on Reddit. At Wall Street Squeeze,
+            we think you can do better and we're here to help.
+        </p>
+        <p>
+            We're here to help you find better stock. We provide collections of stocks
+            based on fundamentals and momentum indicators. So next time you're ready to make
+            an investment decision, start with the data, not a tip from your friend from college.
+        </p>
+    </div>
 
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                Index
-            </th>
-            <th>
-                Symbol
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                $ Change
-            </th>
-            <th>
-                % Change
-            </th>
-        </tr>
-
-        {% for index in indexes %}
+    <div class="table-responsive">
+        <table class="table">
             <tr>
-                <td>
-                    {{ index.name }}
-                </td>
-                <td>
-                    {{ index.ticker }}
-                </td>
-                <td>
-                    ${{ index.close }}
-                </td>
-                <td>
-                    ${{ index.dollar_change|round(2) }}
-                </td>
-                <td>
-                    {{ (index.decimal_change * 100)|round(4)}}%
-                </td>
+                <th>
+                    Index
+                </th>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    $ Change
+                </th>
+                <th>
+                    % Change
+                </th>
             </tr>
-        {% endfor %}
 
-    </table>
+            {% for index in indexes %}
+                <tr>
+                    <td>
+                        {{ index.name }}
+                    </td>
+                    <td>
+                        {{ index.ticker }}
+                    </td>
+                    <td>
+                        ${{ index.close }}
+                    </td>
+                    <td>
+                        ${{ index.dollar_change|round(2) }}
+                    </td>
+                    <td>
+                        {{ (index.decimal_change * 100)|round(4)}}%
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
 </div>
 {% endblock %}
