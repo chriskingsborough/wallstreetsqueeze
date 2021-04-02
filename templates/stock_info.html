@@ -22,7 +22,11 @@
                     Market Cap (billions)
                 </td>
                 <td>
-                    {{ "${:,.0f}".format(stock.marketCap/1000000000 or 0.0) }}B
+                    {% if stock.marketCap is not none %}
+                        {{ "${:,.2f}B".format(stock.marketCap/1000000000 or 0.0) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -30,7 +34,7 @@
                     Sector
                 </td>
                 <td>
-                    {{ stock.sector }}
+                    {{ stock.sector or ''}}
                 </td>
             </tr>
             <tr>
@@ -38,7 +42,7 @@
                     Industry
                 </td>
                 <td>
-                    {{ stock.industry }}
+                    {{ stock.industry or ''}}
                 </td>
             </tr>
             <tr>
@@ -46,7 +50,11 @@
                     52 Week Low
                 </td>
                 <td>
-                    ${{ stock.fiftyTwoWeekLow }}
+                    {% if stock.fiftyTwoWeekLow is not none %}
+                        {{ "${:,.2f}".format(stock.fiftyTwoWeekLow) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -54,7 +62,11 @@
                     52 Week High
                 </td>
                 <td>
-                    ${{ stock.fiftyTwoWeekHigh }}
+                    {% if stock.fiftyTwoWeekHigh is not none %}
+                        {{ "${:,.2f}".format(stock.fiftyTwoWeekHigh) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -62,7 +74,11 @@
                     Fifty Day Average
                 </td>
                 <td>
-                    ${{ stock.fiftyDayAverage }}
+                    {% if stock.fiftyDayAverage is not none %}
+                        {{ "${:,.2f}".format(stock.fiftyDayAverage) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -70,7 +86,11 @@
                     Two Hundred Day Average
                 </td>
                 <td>
-                    ${{ stock.twoHundredDayAverage }}
+                    {% if stock.twoHundredDayAverage is not none %}
+                        {{ "${:,.2f}".format(stock.twoHundredDayAverage) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <!-- Shares -->
@@ -84,8 +104,11 @@
                     Floating Shares
                 </td>
                 <td>
-
-                    {{ "{:,.0f}".format(stock.floatShares or '') }}
+                    {% if stock.floatShares is not none %}
+                        {{ "{:,.0f}".format(stock.floatShares) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -93,7 +116,11 @@
                     Outstanding Shares
                 </td>
                 <td>
-                    {{ "{:,.0f}".format(stock.sharesOutstanding or '') }}
+                    {% if stock.sharesOutstanding is not none %}
+                        {{ "{:,.0f}".format(stock.sharesOutstanding) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -101,7 +128,11 @@
                     Shares Short
                 </td>
                 <td>
-                    {{ "{:,.0f}".format(stock.sharesShort or '') }}
+                    {% if stock.sharesShort is not none %}
+                        {{ "{:,.0f}".format(stock.sharesShort) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -109,7 +140,11 @@
                     Shares Short Previous Month
                 </td>
                 <td>
-                    {{ "{:,.0f}".format(stock.sharesShortPriorMonth or '') }}
+                    {% if stock.sharesShortPriorMonth is not none %}
+                        {{ "{:,.0f}".format(stock.sharesShortPriorMonth) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <tr>
@@ -117,7 +152,11 @@
                     Short Percent of Float
                 </td>
                 <td>
-                    {{ "{:.2f}%".format((stock.shortPercentOfFloat or 0)* 100)  }}
+                    {% if stock.shortPercentOfFloat is not none %}
+                        {{ "{:.2f}%".format(stock.shortPercentOfFloat * 100) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
                 </td>
             </tr>
             <!-- Fundaments -->
