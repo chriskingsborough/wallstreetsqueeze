@@ -6,6 +6,7 @@ class HighShortInterest(db.Model):
     """High Short Interest"""
 
     __tablename__ = 'high_short'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -28,6 +29,7 @@ class DowDogs(db.Model):
     """Dogs of the Dow"""
 
     __tablename__ = "dogs_of_the_dow"
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -44,6 +46,7 @@ class HighDividend(db.Model):
     """High Dividend Stocks"""
 
     __tablename__ = 'high_dividend'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -60,6 +63,7 @@ class HighDividendSansReit(db.Model):
     """High Dividend Stocks sans REITS"""
 
     __tablename__ = 'high_dividend_sans_reit'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -76,6 +80,7 @@ class Runners(db.Model):
     """Runners with high price over averages"""
 
     __tablename__ = 'runners'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -96,6 +101,7 @@ class Dippers(db.Model):
     """Dippers with low price under averages"""
 
     __tablename__ = 'dippers'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -116,6 +122,7 @@ class PriceRangeLow(db.Model):
     """Price Range Low"""
 
     __tablename__ = 'price_range_low'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -137,6 +144,7 @@ class PriceRangeHigh(db.Model):
     """Price Range High"""
 
     __tablename__ = 'price_range_high'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -158,6 +166,7 @@ class PEUnderFifteen(db.Model):
     """PE Under Fifteen"""
 
     __tablename__ = 'pe_under_fifteen'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -177,6 +186,7 @@ class PBUnderOne(db.Model):
     """PB Under Fifteen"""
 
     __tablename__ = 'pb_under_one'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -196,6 +206,7 @@ class PEGUnderOne(db.Model):
     """PEG Under Fifteen"""
 
     __tablename__ = 'peg_under_one'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())
@@ -215,6 +226,7 @@ class StockBasics(db.Model):
     """Stock basic information"""
 
     __tablename__ = 'stock_basics'
+    __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
     shortName = db.Column(db.String())

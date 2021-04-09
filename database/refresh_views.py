@@ -1,5 +1,5 @@
-"""Refresh views"""
-from db_helpers import get_conn, log_failure
+ """Refresh views"""
+from db_helpers import get_ps_conn, log_failure
 
 def high_short():
     # -- high short interest
@@ -494,7 +494,7 @@ def _others():
 def create_view(sql):
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         cur.execute(sql)

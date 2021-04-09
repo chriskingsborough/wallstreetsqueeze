@@ -1,7 +1,8 @@
 import os
-from flask import Flask, render_template, Markup
+from flask import Flask, flash, render_template, Markup, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
+from sqlalchemy import or_
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -9,6 +10,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+from helpers import *
 from models import *
 from models_views import *
 
@@ -427,15 +429,75 @@ def peg_under_one():
         refresh_date=date
     )
 
+@app.route('/add_ticker', methods=["GET", "POST"])
+def add_ticker():
+
+    if request.method == 'POST':
+        ticker = request.form.get('ticker')
+        ticker = ticker.upper()
+        add_ticker_to_db(ticker)
+        flash(f"Queued request for {ticker}. Most requests process in less than 24 hours.")
+        return redirect('/')
+    else:
+        return redirect('/')
+
+@app.route('/stocks', methods=["GET", "POST"])
+def stock_search():
+    """Handle search terms"""
+    if request.method == 'POST':
+        search = request.form.get('search')
+
+        ticker_res = db.session.query(
+            StockBasics
+        ).filter(
+            StockBasics.ticker == search.upper(),
+        ).all()
+
+        # now search other possibilities
+        name_res = db.session.query(
+            StockBasics
+        ).filter(
+            StockBasics.longName.ilike(f"%{search}%")
+        ).all()
+
+        # finally search for business summary
+        if len(search) > 2:
+            description_res = db.session.query(
+                StockBasics
+            ).filter(
+                StockBasics.longBusinessSummary.ilike(f"%{search}%")
+            ).all()
+        else:
+            description_res = []
+
+        # combine results
+        results = []
+        results.extend(ticker_res[:10])
+        results.extend(name_res[:10])
+        results.extend(description_res[:10])
+
+        results = unique_list(results)
+        return render_template(
+            'search_results.html',
+            results=results,
+            search=search
+        )
+    else:
+        return redirect('/')
+
 @app.route('/<ticker>')
 def stock_page(ticker):
 
 
-    stock = db.session.query(
-        StockBasics
-    ).filter(
-        StockBasics.ticker == ticker
-    ).one()
+    try:
+        stock = db.session.query(
+            StockBasics
+        ).filter(
+            StockBasics.ticker == ticker
+        ).one()
+    except:
+        flash(f"Unable to find ticker: {ticker}")
+        return redirect('/')
 
     collections = db.session.query(
         Collections
@@ -448,8 +510,6 @@ def stock_page(ticker):
     # TODO: might make sense to just pass the list
     collections_string = ', '.join(_collections)
 
-    if stock is None:
-        return f"""404: Unable to find ticker {ticker}"""
 
     return render_template(
         'stock_info.html',
@@ -457,44 +517,6 @@ def stock_page(ticker):
         collections=collections_string,
         refresh_date=None
     )
-
-def fetch_index_prices():
-
-    subquery = db.session.query(func.max(IndexPrices.date)).subquery()
-    res = db.session.query(IndexPrices).filter(
-        IndexPrices.date == subquery
-    ).order_by(
-        IndexPrices.previous_close.desc()
-    ).all()
-    return res
-
-def fetch_stocks(collection):
-
-    res = db.session.query(
-        Collections, StockPrices, StockInfo
-    ).join(
-        Collections, StockPrices.ticker == Collections.ticker
-    ).join(
-        StockInfo, StockPrices.ticker == StockInfo.ticker, isouter=True
-    ).filter(
-        Collections.collection == collection
-    ).order_by(
-        Collections.ticker
-    ).all()
-
-    return res
-
-def fetch_refresh_date():
-
-    res = db.session.query(func.max(IndexPrices.date)).one()
-    dt = res[0]
-    if dt:
-        # subtract a day because of the UTC offset
-        dt = dt - timedelta(days=1)
-        formatted_date = datetime.strftime(dt, '%B %-d, %Y')
-    else:
-        formatted_date = ""
-    return formatted_date
 
 if __name__ == "__main__":
     app.run()

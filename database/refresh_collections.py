@@ -3,26 +3,36 @@ from rq.job import Job
 from rq import Retry
 import yfinance
 import json
-from worker import conn
-from db_helpers import get_conn
-from worker import write_ticker_to_collections, find_removed
+# from worker import conn
+from db_helpers import *
 from scraper import get_sp_companies, get_high_short_interest, _parse_tickers, get_small_cap_tickers, get_dow_companies, get_nasdaq, read_russell_csv
 
-q = Queue(connection=conn)
+
+q = get_redis_queue()
+
 
 def queue_collection_tickers(tickers, collection):
 
     # iterate through tickers and write to db
-    jobs = [
+    # jobs = [
+    #     q.enqueue_call(
+    #         func=write_ticker_to_collections,
+    #         args=(tick, collection),
+    #         retry=Retry(3),
+    #         result_ttl=5000
+    #     )
+    #     for tick in tickers
+    # ]
+
+    for tick in tickers:
         q.enqueue_call(
             func=write_ticker_to_collections,
             args=(tick, collection),
             retry=Retry(3),
             result_ttl=5000
         )
-        for tick in tickers
-    ]
-    return jobs
+
+    # return jobs
 
 def large_cap():
 

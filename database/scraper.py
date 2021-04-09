@@ -8,7 +8,7 @@ import psycopg2 as ps
 import json
 import time
 import csv
-from db_helpers import get_conn
+from db_helpers import get_ps_conn
 
 def get_sp_companies(url):
     try:
@@ -78,7 +78,7 @@ def write_to_db(tickers, collection):
 
     failed_tickers = []
 
-    conn = get_conn()
+    conn = get_ps_conn()
 
     for ticker in tickers:
         cur = conn.cursor()

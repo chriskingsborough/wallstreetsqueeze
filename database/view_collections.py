@@ -5,7 +5,7 @@ from rq.job import Job
 from rq import Retry
 from worker import conn
 
-from db_helpers import get_conn
+from db_helpers import get_ps_conn
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ def read_yaml():
 def get_view_tickers(view_name, limit):
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         sql = f"""
@@ -47,7 +47,7 @@ def get_view_tickers(view_name, limit):
 def get_existing_tickers(view_name):
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         sql = f"""
@@ -81,7 +81,7 @@ def compare_tickers(new_tickers, existing_tickers):
 def write_ticker_collections(tickers, view_name):
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         # delete the existing collection
@@ -122,7 +122,7 @@ def write_changes(added, removed, view_name):
     """Write collection changes to DB"""
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         # write added
