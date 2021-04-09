@@ -1,10 +1,11 @@
 from rq import Queue
 from rq.job import Job
 from rq import Retry
-from worker import conn
 from indices import get_index_prices, populate_tickers
 
-q = Queue(connection=conn)
+from db_helpers import get_redis_queue
+
+q = get_redis_queue()
 
 def index_prices():
 

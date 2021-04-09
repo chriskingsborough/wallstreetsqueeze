@@ -1,8 +1,7 @@
 """Get index quotes"""
 import yfinance
 
-from db_helpers import get_conn
-
+from db_helpers import get_ps_conn
 
 def populate_tickers():
     """Populate index_tickers table"""
@@ -12,7 +11,7 @@ def populate_tickers():
     VALUES (%s, %s, 1, NOW())
     """
 
-    conn = get_conn()
+    conn = get_ps_conn()
 
     cur = conn.cursor()
 
@@ -38,7 +37,7 @@ def get_index_prices():
     """Get daily price and change"""
 
     # get database conn and cursor
-    conn = get_conn()
+    conn = get_ps_conn()
     cur = conn.cursor()
 
     # get the tickers

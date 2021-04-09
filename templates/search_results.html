@@ -1,0 +1,61 @@
+<!doctype html>
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+{% if results|length > 0 %}
+
+    <div class="container">
+
+        <h2>Search results for "{{search}}"</h2>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Long Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Business Summary
+                </th>
+            </tr>
+
+        {% for result in results %}
+            <tr>
+                <td>
+                    <a href="/{{result.ticker}}">{{result.ticker}}</a>
+                </td>
+                <td>
+                    <a href="/{{result.ticker}}">{{result.longName}}</a>
+                </td>
+                <td>
+                    ${{result.price or 0.00}}
+                </td>
+                <td>
+                    {{result.longBusinessSummary}}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <div class="container">
+        <h2>No results found for "{{search}}".</h2>
+    </div>
+{% endif %}
+<div class="container">
+    <h2>Not finding what you're looking for? Request support for a specific ticker:</h2>
+    <form action="/add_ticker" method="post" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" name="ticker" type="text" value="{{search}}" aria-label="Ticker" />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Request</button>
+    </form>
+</div>
+{% endblock %}

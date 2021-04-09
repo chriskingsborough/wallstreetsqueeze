@@ -136,3 +136,10 @@ class FailureLog(db.Model):
     table = db.Column(db.String())
     action = db.Column(db.String())
     exception = db.Column(db.String())
+
+class StockRequests(db.Model):
+    """Holds new stock requests"""
+    __tablename__ = 'stock_requests'
+
+    id = db.Column(BIGINT, primary_key=True)
+    ticker = db.Column(db.String())

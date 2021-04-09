@@ -2,13 +2,13 @@
 import yfinance
 import datetime
 
-from db_helpers import get_conn, log_failure
+from db_helpers import get_ps_conn, log_failure
 
 def get_info(ticker):
     """Get info for a ticker and write to db"""
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         yticker = yfinance.Ticker(ticker)
@@ -201,7 +201,7 @@ def get_price(ticker):
     """Get price for ticker for previous close"""
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         yticker = yfinance.Ticker(ticker)
@@ -246,7 +246,7 @@ def get_all_tickers():
     """Get all tickers from database"""
 
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         sql = """
@@ -270,7 +270,7 @@ def get_all_tickers():
 def find_bad_updates():
     ticker = ''
     try:
-        conn = get_conn()
+        conn = get_ps_conn()
         cur = conn.cursor()
 
         find_bad_updates_sql = """
