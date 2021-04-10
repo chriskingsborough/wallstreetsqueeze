@@ -6,7 +6,7 @@ import json
 from urllib.parse import urlparse
 
 listen = ['default']
-redis_url = os.getenv('REDIS_URL')
+redis_url = os.getenv('REDIS_TLS_URL')
 
 url = urlparse(redis_url)
 conn = redis.Redis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)

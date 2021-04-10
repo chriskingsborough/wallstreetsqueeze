@@ -7,7 +7,7 @@ import json
 from urllib.parse import urlparse
 
 DATABASE_URL = os.environ['DATABASE_URL']
-REDIS_URL = os.getenv('REDIS_URL')
+REDIS_URL = os.getenv('REDIS_TLS_URL')
 
 def get_ps_conn():
 
