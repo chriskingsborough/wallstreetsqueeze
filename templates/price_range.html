@@ -8,70 +8,72 @@
 
 {{ text }}
 
-<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
-
 <div class="table-responsive">
-    <table class="table" id="stockTable">
-        <tr>
-            <th>
-                Symbol
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Previous Close
-            </th>
-            <th>
-                Fifty Day Average
-            </th>
-            <th>
-                Two Hundred Day Average
-            </th>
-            <th>
-                52 Week Low
-            </th>
-            <th>
-                52 Week High
-            </th>
-            <th>
-                Price % of 52 Week Range
-            </th>
-            <th>
-                Industry
-            </th>
-        </tr>
-        {% for stock in stock_data %}
+    <table id="tableSortedSearch" class="table" style="width:100%">
+        <thead>
             <tr>
-                <td>
-                    <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
-                </td>
-                <td>
-                    {{ stock.shortName }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.price) }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.fiftyDayAverage) }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.twoHundredDayAverage) }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
-                </td>
-                <td>
-                    {{ '%.2f'|format(stock.pricePercentOfRange*100) }}%
-                </td>
-                <td>
-                    {{ stock.industry }}
-                </td>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Previous Close
+                </th>
+                <th>
+                    Fifty Day Average
+                </th>
+                <th>
+                    Two Hundred Day Average
+                </th>
+                <th>
+                    52 Week Low
+                </th>
+                <th>
+                    52 Week High
+                </th>
+                <th>
+                    Price % of 52 Week Range
+                </th>
+                <th>
+                    Industry
+                </th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for stock in stock_data %}
+                <tr>
+                    <td>
+                        <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
+                    </td>
+                    <td>
+                        {{ stock.shortName }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.price) }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.fiftyDayAverage) }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.twoHundredDayAverage) }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.fiftyTwoWeekHigh) }}
+                    </td>
+                    <td>
+                        {{ '%.2f'|format(stock.pricePercentOfRange*100) }}%
+                    </td>
+                    <td>
+                        {{ stock.industry }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 

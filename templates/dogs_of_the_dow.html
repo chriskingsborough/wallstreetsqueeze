@@ -9,68 +9,70 @@
 {{text}}
 <br />
 
-<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
-
 <div class="table-responsive">
-    <table class="table" id="stockTable">
-        <tr>
-            <th>
-                Symbol
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Previous Close
-            </th>
-            <th>
-                Dividend Yield
-            </th>
-            <th>
-                Market Cap (billions)
-            </th>
-            <th>
-                PE Ratio
-            </th>
-            <th class="d-none d-lg-table-cell">
-                Beta
-            </th>
-            <th>
-                Small Dog
-            </th>
-        </tr>
-        {% for stock in stock_data %}
+    <table id="tableSortedSearch" class="table" style="width:100%">
+        <thead>
             <tr>
-                <td>
-                    <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
-                </td>
-                <td>
-                    {{ stock.shortName }}
-                </td>
-                <td>
-                    ${{ '%.2f' | format(stock.price|round(2)) }}
-                </td>
-                <td>
-                    {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
-                </td>
-                <td>
-                    ${{ '%.4f'|format(stock.marketCap/1000000000) }}
-                </td>
-                <td>
-                    {{ '%.2f'|format(stock.forwardPE) }}
-                </td>
-                <td class="d-none d-lg-table-cell">
-                    {% if stock.beta is not none %}
-                        {{ '%.2f'|format(stock.beta) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {{ stock.smallDog }}
-                </td>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Previous Close
+                </th>
+                <th>
+                    Dividend Yield
+                </th>
+                <th>
+                    Market Cap (billions)
+                </th>
+                <th>
+                    PE Ratio
+                </th>
+                <th class="d-none d-lg-table-cell">
+                    Beta
+                </th>
+                <th>
+                    Small Dog
+                </th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for stock in stock_data %}
+                <tr>
+                    <td>
+                        <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
+                    </td>
+                    <td>
+                        {{ stock.shortName }}
+                    </td>
+                    <td>
+                        ${{ '%.2f' | format(stock.price|round(2)) }}
+                    </td>
+                    <td>
+                        {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
+                    </td>
+                    <td>
+                        ${{ '%.4f'|format(stock.marketCap/1000000000) }}
+                    </td>
+                    <td>
+                        {{ '%.2f'|format(stock.forwardPE) }}
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        {% if stock.beta is not none %}
+                            {{ '%.2f'|format(stock.beta) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ stock.smallDog }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 
