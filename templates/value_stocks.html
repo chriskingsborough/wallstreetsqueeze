@@ -8,110 +8,112 @@
 
 {{text}}
 
-<input type="text" id="stockFilter" onkeyup="filterStocks()" placeholder="Search stocks" title="Search stocks">
-
 <div class="table-responsive">
-    <table class="table" id="stockTable">
-        <tr>
-            <th>
-                Symbol
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Previous Close
-            </th>
-            <th>
-                Dividend Yield
-            </th>
-            <th>
-                Market Cap (billions)
-            </th>
-            <th>
-                PE Ratio
-            </th>
-            <th>
-                PEG Ratio
-            </th>
-            <th>
-                Price to Book
-            </th>
-            <th>
-                Forward EPS
-            </th>
-            <th>
-                Beta
-            </th>
-            <th>
-                Sector
-            </th>
-        </tr>
-        {% for stock in stock_data %}
+    <table id="tableSortedSearch" class="table" style="width:100%">
+        <thead>
             <tr>
-                <td>
-                    <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
-                </td>
-                <td>
-                    {{ stock.longName }}
-                </td>
-                <td>
-                    ${{ '%.2f'|format(stock.price) }}
-                </td>
-                <td>
-                    {% if stock is not none and stock.trailingAnnualDividendYield is not none %}
-                        {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.marketCap is not none %}
-                        ${{ '%.4f'|format((stock.marketCap/1000000000)) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.forwardPE is not none %}
-                        {{ '%.2f'|format(stock.forwardPE) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.pegRatio is not none %}
-                        {{ '%.2f'|format(stock.pegRatio) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.priceToBook is not none %}
-                        {{ '%.2f'|format(stock.priceToBook) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.forwardEps is not none %}
-                        {{ '%.2f'|format(stock.forwardEps) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if stock is not none and stock.beta is not none %}
-                        {{ '%.2f'|format(stock.beta) }}
-                    {% else %}
-                        {{ '' }}
-                    {% endif %}
-                </td>
-                <td>
-                    {{ stock.industry }}
-                </td>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Previous Close
+                </th>
+                <th>
+                    Dividend Yield
+                </th>
+                <th>
+                    Market Cap (billions)
+                </th>
+                <th>
+                    PE Ratio
+                </th>
+                <th>
+                    PEG Ratio
+                </th>
+                <th>
+                    Price to Book
+                </th>
+                <th>
+                    Forward EPS
+                </th>
+                <th>
+                    Beta
+                </th>
+                <th>
+                    Sector
+                </th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for stock in stock_data %}
+                <tr>
+                    <td>
+                        <a href="/{{stock.ticker}}">{{ stock.ticker }}</a>
+                    </td>
+                    <td>
+                        {{ stock.longName }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.price) }}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.trailingAnnualDividendYield is not none %}
+                            {{ '%.2f'|format((stock.trailingAnnualDividendYield*100)) }}%
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.marketCap is not none %}
+                            ${{ '%.4f'|format((stock.marketCap/1000000000)) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.forwardPE is not none %}
+                            {{ '%.2f'|format(stock.forwardPE) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.pegRatio is not none %}
+                            {{ '%.2f'|format(stock.pegRatio) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.priceToBook is not none %}
+                            {{ '%.2f'|format(stock.priceToBook) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.forwardEps is not none %}
+                            {{ '%.2f'|format(stock.forwardEps) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.beta is not none %}
+                            {{ '%.2f'|format(stock.beta) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ stock.industry }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 

@@ -13,17 +13,6 @@ q = get_redis_queue()
 
 def queue_collection_tickers(tickers, collection):
 
-    # iterate through tickers and write to db
-    # jobs = [
-    #     q.enqueue_call(
-    #         func=write_ticker_to_collections,
-    #         args=(tick, collection),
-    #         retry=Retry(3),
-    #         result_ttl=5000
-    #     )
-    #     for tick in tickers
-    # ]
-
     for tick in tickers:
         q.enqueue_call(
             func=write_ticker_to_collections,
@@ -32,7 +21,6 @@ def queue_collection_tickers(tickers, collection):
             result_ttl=5000
         )
 
-    # return jobs
 
 def large_cap():
 
