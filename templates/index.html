@@ -33,43 +33,66 @@
 
     <div class="table-responsive">
         <table class="table">
-            <tr>
-                <th>
-                    Index
-                </th>
-                <th>
-                    Symbol
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    $ Change
-                </th>
-                <th>
-                    % Change
-                </th>
-            </tr>
-
-            {% for index in indexes %}
+            <thead>
+                <tr>
+                    <th>
+                        Collection
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>
-                        {{ index.name }}
+                        Indexes
                     </td>
                     <td>
-                        {{ index.ticker }}
-                    </td>
-                    <td>
-                        ${{ index.close }}
-                    </td>
-                    <td>
-                        ${{ index.dollar_change|round(2) }}
-                    </td>
-                    <td>
-                        {{ (index.decimal_change * 100)|round(4)}}%
+                        Contains standard indexes including the S&P 500, Dow Jones and Nasdaq 100.
                     </td>
                 </tr>
-            {% endfor %}
+                <tr>
+                    <td>
+                        Fundamental
+                    </td>
+                    <td>
+                        Contains collections based on fundamental indicators such as
+                        dividend rate and short interest.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Momentum
+                    </td>
+                    <td>
+                        The momentum collections identify stocks that have strong upwards or
+                        downwards momentum. The momentum collections identify stocks both above
+                        or below their moving averages and stocks near either their 52 week highs
+                        or lows.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Value
+                    </td>
+                    <td>
+                        The value collections are centered around stocks which present good "value"
+                        investments. This includes common metrics used by value investors, such as
+                        price to book ratio, price to earnings ratio and PEG ratio.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Specialty
+                    </td>
+                    <td>
+                        The specialty collection screens for stocks in specific industries. These special
+                        collections include screens for stocks for stocks associated with cryptocurrencies and
+                        blockchain, electric vehicles, online and video games, marijuana and cannabis, and pets.
+                    </td>
+                </tr>
+            </tbody>
 
         </table>
     </div>

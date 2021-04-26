@@ -9,9 +9,6 @@ from db_helpers import get_ps_conn
 
 logger = logging.getLogger(__name__)
 
-# init queue
-q = Queue(connection=conn)
-
 def read_yaml():
 
     with open('database/views/view_config.yaml', 'r') as f:
@@ -189,23 +186,3 @@ def refresh_view_changes(view_name, limit):
         removed,
         view_name
     )
-
-# def main():
-#     """Orchaestrate view logic and send to worker"""
-#
-#     view_config = read_yaml()
-#
-#     for view in view_config:
-#         q.enqueue_call(
-#             func=refresh_view_changes,
-#             args=(
-#                 view['name'],
-#                 view['limit']
-#             ),
-#             retry=Retry(3),
-#             result_ttl=5000
-#         )
-
-
-# if __name__ == '__main__':
-#     main()

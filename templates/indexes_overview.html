@@ -1,0 +1,65 @@
+<!doctype html>
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <h1>
+          Index Overview
+    </h1>
+
+    <div class="info">
+        <p>
+            Below are the prices of the most commonly quoted stock indexes. Prices are up to date
+            as of the previous close. To find more details on the constituents of each index,
+            check out the index collections. Here you'll find the constituent companies for all
+            the most commonly quoted indexes, including the <strong>S&P 500</strong>, <strong>Nasdaq 100</strong>,
+            and the <strong>Dow Jones Industrial Average</strong>.
+        </p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>
+                    Index
+                </th>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    $ Change
+                </th>
+                <th>
+                    % Change
+                </th>
+            </tr>
+
+            {% for index in indexes %}
+                <tr>
+                    <td>
+                        {{ index.name }}
+                    </td>
+                    <td>
+                        {{ index.ticker }}
+                    </td>
+                    <td>
+                        ${{ index.close }}
+                    </td>
+                    <td>
+                        ${{ index.dollar_change|round(2) }}
+                    </td>
+                    <td>
+                        {{ (index.decimal_change * 100)|round(4)}}%
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</div>
+{% endblock %}
