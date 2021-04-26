@@ -1,0 +1,120 @@
+<!doctype html>
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+{{text}}
+
+<div class="table-responsive">
+    <table id="tableSortedSearch" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Symbol
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Previous Close
+                </th>
+                <th>
+                    Dividend Yield
+                </th>
+                <th>
+                    Market Cap (billions)
+                </th>
+                <th>
+                    PE Ratio
+                </th>
+                <th>
+                    PEG Ratio
+                </th>
+                <th>
+                    Price to Book
+                </th>
+                <th>
+                    Forward EPS
+                </th>
+                <th>
+                    Beta
+                </th>
+                <th>
+                    Sector
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stock_data %}
+                <tr>
+                    <td>
+                        <a href="/{{stock.StockBasics.ticker}}">{{ stock.StockBasics.ticker }}</a>
+                    </td>
+                    <td>
+                        {{ stock.StockBasics.longName }}
+                    </td>
+                    <td>
+                        ${{ '%.2f'|format(stock.StockBasics.price) }}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.trailingAnnualDividendYield is not none %}
+                            {{ '%.2f'|format((stock.StockBasics.trailingAnnualDividendYield*100)) }}%
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.marketCap is not none %}
+                            ${{ '%.4f'|format((stock.StockBasics.marketCap/1000000000)) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.forwardPE is not none %}
+                            {{ '%.2f'|format(stock.StockBasics.forwardPE) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.pegRatio is not none %}
+                            {{ '%.2f'|format(stock.StockBasics.pegRatio) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.priceToBook is not none %}
+                            {{ '%.2f'|format(stock.StockBasics.priceToBook) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.forwardEps is not none %}
+                            {{ '%.2f'|format(stock.StockBasics.forwardEps) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if stock is not none and stock.StockBasics.beta is not none %}
+                            {{ '%.2f'|format(stock.StockBasics.beta) }}
+                        {% else %}
+                            {{ '' }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ stock.StockBasics.industry }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

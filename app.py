@@ -22,6 +22,15 @@ def home_page():
 
     return render_template('index.html', indexes=indexes, refresh_date=date)
 
+@app.route('/indexes')
+def index_overview():
+
+    indexes = fetch_index_prices()
+    date = fetch_refresh_date()
+
+    return render_template('indexes_overview.html', indexes=indexes, refresh_date=date)
+
+
 @app.route('/s_and_p_500')
 def large_cap():
 
@@ -38,6 +47,7 @@ def large_cap():
         'basic_stocks.html',
         title='S&P 500',
         text=text,
+        meta=text,
         stock_data=stocks,
         refresh_date=date
     )
@@ -484,6 +494,112 @@ def stock_search():
         )
     else:
         return redirect('/')
+
+@app.route('/crypto')
+def crypto():
+
+    date = fetch_refresh_date()
+
+    stocks = db.session.query(
+        StockBasics, Collections
+    ).filter(
+        Collections.ticker == StockBasics.ticker
+    ).filter(
+        Collections.collection == 'Crypto'
+    ).all()
+
+    return render_template(
+        'specialty_stocks.html',
+        title='Cryptocurrencies & Blockchain',
+        text='This collection contains stocks which are related to cryptocurrencies or blockchain.',
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/electric_vehicles')
+def electric_vehicles():
+
+    date = fetch_refresh_date()
+
+    stocks = db.session.query(
+        StockBasics, Collections
+    ).filter(
+        Collections.ticker == StockBasics.ticker
+    ).filter(
+        Collections.collection == 'Electric Vehicles'
+    ).all()
+
+    return render_template(
+        'specialty_stocks.html',
+        title='Electric Vehicles',
+        text="""This collection contains stocks which are related to Electric Vehicle manufacture or related
+        industries such as charging stations.""",
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/gaming')
+def gaming():
+
+    date = fetch_refresh_date()
+
+    stocks = db.session.query(
+        StockBasics, Collections
+    ).filter(
+        Collections.ticker == StockBasics.ticker
+    ).filter(
+        Collections.collection == 'Gaming'
+    ).all()
+
+    return render_template(
+        'specialty_stocks.html',
+        title='Videogames',
+        text='This collection contains stocks which are related to online and video games',
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/marijuana')
+def marijuana():
+
+    date = fetch_refresh_date()
+
+    stocks = db.session.query(
+        StockBasics, Collections
+    ).filter(
+        Collections.ticker == StockBasics.ticker
+    ).filter(
+        Collections.collection == 'Marijuana'
+    ).all()
+
+    return render_template(
+        'specialty_stocks.html',
+        title='Marijuana & Cannabis',
+        text='This collection contains stocks which are related to the production and distribution of marijuana & cannabis.',
+        stock_data=stocks,
+        refresh_date=date
+    )
+
+@app.route('/pets')
+def pets():
+
+    date = fetch_refresh_date()
+
+    stocks = db.session.query(
+        StockBasics, Collections
+    ).filter(
+        Collections.ticker == StockBasics.ticker
+    ).filter(
+        Collections.collection == 'Pets'
+    ).all()
+
+    return render_template(
+        'specialty_stocks.html',
+        title='Pets',
+        text='This collection contains stocks which are related to pets.',
+        stock_data=stocks,
+        refresh_date=date
+    )
 
 @app.route('/<ticker>')
 def stock_page(ticker):
