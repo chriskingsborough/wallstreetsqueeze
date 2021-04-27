@@ -129,8 +129,14 @@ def high_dividend():
         si."marketCap",
         si.sector,
         si.industry,
-        si."trailingAnnualDividendYield",
-        si."trailingAnnualDividendRate",
+        case when si."trailingAnnualDividendYield" < si."dividendYield"
+            then si."trailingAnnualDividendYield"
+            else si."dividendYield"
+                end "trailingAnnualDividendYield",
+        case when si."trailingAnnualDividendRate" < si."dividendRate"
+            then si."trailingAnnualDividendRate"
+            else si."dividendRate"
+                end "trailingAnnualDividendRate",
         si."forwardPE",
         si.beta
     from stock_info si
@@ -140,7 +146,7 @@ def high_dividend():
         and si."trailingAnnualDividendYield" is not null
         and si."exDividendDate" is not null
         and si."marketCap" > 500000000
-    order by si."trailingAnnualDividendYield" desc
+    order by 7 desc
     ;"""
 
     return sql
@@ -157,8 +163,14 @@ def high_dividend_sans_reit():
         si."marketCap",
         si.sector,
         si.industry,
-        si."trailingAnnualDividendYield",
-        si."trailingAnnualDividendRate",
+        case when si."trailingAnnualDividendYield" < si."dividendYield"
+            then si."trailingAnnualDividendYield"
+            else si."dividendYield"
+                end "trailingAnnualDividendYield",
+        case when si."trailingAnnualDividendRate" < si."dividendRate"
+            then si."trailingAnnualDividendRate"
+            else si."dividendRate"
+                end "trailingAnnualDividendRate",
         si."forwardPE",
         si.beta
     from stock_info si
@@ -169,7 +181,7 @@ def high_dividend_sans_reit():
         and si."exDividendDate" is not null
         and si.industry not like 'REIT%'
         and si."marketCap" > 500000000
-    order by si."trailingAnnualDividendYield" desc
+    order by 7 desc
     ;"""
 
     return sql
