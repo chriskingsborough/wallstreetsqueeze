@@ -426,6 +426,8 @@ def stock_basics():
         si."fiftyDayAverage",
         si."twoHundredDayAverage",
         si."marketCap",
+        si."dividendYield",
+        si."dividendRate",
         si."trailingAnnualDividendYield",
         si."trailingAnnualDividendRate",
         si."floatShares" ,

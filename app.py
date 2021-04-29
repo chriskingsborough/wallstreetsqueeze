@@ -508,10 +508,19 @@ def crypto():
         Collections.collection == 'Crypto'
     ).all()
 
+    meta = """
+        Top cryptocurrency stocks. A collection of the best crypto stocks which
+        are related to cryptocurrencies and the blockchain. Contains stocks with various
+        crypto business practices including mining and holding crypto currencies such as
+        Bitcoin, Ethereum or Dogecoin, providing transaction processing services and
+        the production of technology used for mining.
+    """
+
     return render_template(
         'specialty_stocks.html',
         title='Cryptocurrencies & Blockchain',
         text='This collection contains stocks which are related to cryptocurrencies or blockchain.',
+        meta=meta,
         stock_data=stocks,
         refresh_date=date
     )

@@ -179,6 +179,30 @@
             </tr>
             <tr>
                 <td>
+                    Dividend Yield
+                </td>
+                <td>
+                    {% if stock.dividendYield is not none %}
+                        {{ "{:.2f}%".format(stock.dividendYield * 100) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dividend Rate
+                </td>
+                <td>
+                    {% if stock.dividendRate is not none %}
+                        {{ "${:.2f}".format(stock.dividendRate) }}
+                    {% else %}
+                        {{ '' }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
                     Trailing Annual Dividend Yield
                 </td>
                 <td>

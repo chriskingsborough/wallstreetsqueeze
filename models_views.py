@@ -244,6 +244,8 @@ class StockBasics(db.Model):
     fiftyDayAverage = db.Column(REAL)
     twoHundredDayAverage = db.Column(REAL)
     marketCap = db.Column(REAL)
+    dividendYield = db.Column(REAL)
+    dividendRate = db.Column(REAL)
     trailingAnnualDividendYield = db.Column(REAL)
     trailingAnnualDividendRate = db.Column(REAL)
     floatShares = db.Column(REAL)
