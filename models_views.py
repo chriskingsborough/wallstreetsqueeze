@@ -42,10 +42,10 @@ class DowDogs(db.Model):
     beta = db.Column(REAL)
     smallDog = db.Column(db.String())
 
-class HighDividend(db.Model):
+class HighDividendStocks(db.Model):
     """High Dividend Stocks"""
 
-    __tablename__ = 'high_dividend'
+    __tablename__ = 'high_dividend_stocks'
     __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)
@@ -59,10 +59,10 @@ class HighDividend(db.Model):
     forwardPE = db.Column(REAL)
     beta = db.Column(REAL)
 
-class HighDividendSansReit(db.Model):
+class HighDividendReits(db.Model):
     """High Dividend Stocks sans REITS"""
 
-    __tablename__ = 'high_dividend_sans_reit'
+    __tablename__ = 'high_dividend_reits'
     __table_args__ = {'info': dict(is_view=True)}
 
     ticker = db.Column(db.String(), primary_key=True)

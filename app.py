@@ -193,13 +193,13 @@ def dogs_of_the_dow():
         refresh_date=date
     )
 
-@app.route('/high_dividend')
-def high_dividend():
+@app.route('/high_dividend_stocks')
+def high_dividend_sans_reit():
 
     stocks = db.session.query(
-        HighDividend
+        HighDividendStocks
     ).filter(
-        HighDividend.marketCap > 500000000
+        HighDividendStocks.marketCap > 500000000
     ).limit(25).all()
     date = fetch_refresh_date()
     title = 'High Dividend Stocks'
@@ -207,10 +207,8 @@ def high_dividend():
     text = Markup(
         """
         <p>
-        This collection includes the 25 highest dividend yield stocks across all major indices.
-        Many of these companies are REIT or Real Estate Investments Trusts. While REITs can be a great
-        source of investment income, there are also some key differences between REITs and other equities.
-        If you wish to find high dividend yield stock excluding REITs, please see our collection <strong>High Dividend ex REITs</strong>. <br/>
+        This collection includes the 25 highest dividend yield stocks across all major indices, excluding REITs.
+        If you wish to find high dividend yield REITs, please see our collection <strong>High Dividend REITs</strong>. <br/>
         Please note, while we do our best to provide accurate information, you should always double check
         and verify this information yourself prior to making any investment decisions.
         </p>
@@ -225,22 +223,23 @@ def high_dividend():
         refresh_date=date
     )
 
-@app.route('/high_dividend_no_reit')
-def high_dividend_sans_reit():
+@app.route('/high_dividend_reits')
+def high_dividend():
 
     stocks = db.session.query(
-        HighDividendSansReit
+        HighDividendReits
     ).filter(
-        HighDividendSansReit.marketCap > 500000000
+        HighDividendReits.marketCap > 500000000
     ).limit(25).all()
     date = fetch_refresh_date()
-    title = 'High Dividend Stocks excluding REITs'
+    title = 'High Dividend REITs'
 
     text = Markup(
         """
         <p>
-        This collection includes the 25 highest dividend yield stocks across all major indices, excluding REITs.
-        If you wish to find high dividend yield stock including REITs, please see our collection <strong>High Dividend</strong>. <br/>
+        This collection includes the 25 highest dividend yield REITs. While REITs can be a great
+        source of investment income, there are also some key differences between REITs and other equities.
+        If you wish to find high dividend yield stocks excluding REITs, please see our collection <strong>High Dividend Stocks</strong>. <br/>
         Please note, while we do our best to provide accurate information, you should always double check
         and verify this information yourself prior to making any investment decisions.
         </p>

@@ -111,7 +111,7 @@ def dow_dogs():
 
     return sql
 
-def high_dividend():
+def high_dividend_reits():
 
     # -- High Dividend Yield
     # -- Need to add
@@ -120,8 +120,8 @@ def high_dividend():
     #     -- exDividendDate
     # -- check feasibility of exDividendDate within last year
     sql = """
-    drop view if exists high_dividend;
-    create or replace view high_dividend as
+    drop view if exists high_dividend_reits;
+    create or replace view high_dividend_reits as
     select
         si.ticker,
         si."shortName",
@@ -146,16 +146,17 @@ def high_dividend():
         and si."trailingAnnualDividendYield" is not null
         and si."exDividendDate" is not null
         and si."marketCap" > 500000000
+        and si."industry" like 'REIT%'
     order by 7 desc
     ;"""
 
     return sql
 
-def high_dividend_sans_reit():
+def high_dividend_stocks():
 
     sql = """
-    drop view if exists high_dividend_sans_reit;
-    create or replace view high_dividend_sans_reit as
+    drop view if exists high_dividend_stocks;
+    create or replace view high_dividend_stocks as
     select
         si.ticker,
         si."shortName",
@@ -525,8 +526,8 @@ if __name__ == '__main__':
     # high short
     create_view(high_short())
     create_view(dow_dogs())
-    create_view(high_dividend())
-    create_view(high_dividend_sans_reit())
+    create_view(high_dividend_stocks())
+    create_view(high_dividend_reits())
     create_view(runners())
     create_view(dippers())
     create_view(price_range_low())
