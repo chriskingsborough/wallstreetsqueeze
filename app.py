@@ -347,9 +347,11 @@ def fifty_two_week_high():
 @app.route('/52_week_low')
 def fifty_two_week_low():
 
+    app.logger.info('querying database')
     stocks = db.session.query(
         PriceRangeLow
     ).limit(50).all()
+    app.logger.info('stocks queried')
     date = fetch_refresh_date()
     title = 'Bottom of Price Range'
 
@@ -363,7 +365,7 @@ def fifty_two_week_low():
         </p>
         """
     )
-
+    app.logger.info('preparing template')
     return render_template(
         'price_range.html',
         title=title,
