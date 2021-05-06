@@ -7,7 +7,7 @@
 <div class="container">
     <img src="{{ stock.logo_url }}" alt="{{stock.ticker}} logo" />
     <h1><a href={{ stock.website }} target="_blank" style="color:black; text-decoration:none;">{{stock.longName}}</a></h1>
-    <h3>Current Price: ${{stock.price}}</h3>
+    <h3>Previous Close: {{ '$%.2f'|format(stock.price) }}</h3>
     <p>{{stock.longBusinessSummary}}</p>
 
     <div class="table-responsive">
@@ -15,6 +15,14 @@
             <tr>
                 <td colspan="2">
                     <strong>Basics</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ticker
+                </td>
+                <td>
+                    {{ stock.ticker }}
                 </td>
             </tr>
             <tr>
@@ -43,6 +51,14 @@
                 </td>
                 <td>
                     {{ stock.industry or ''}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Previous Close
+                </td>
+                <td>
+                    {{ '$%.2f'|format(stock.price) }}
                 </td>
             </tr>
             <tr>

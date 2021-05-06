@@ -37,10 +37,10 @@
                     <a href="/{{result.ticker}}">{{result.longName}}</a>
                 </td>
                 <td>
-                    ${{result.price or 0.00}}
+                    {{ '$%.2f'|format(result.price) }}
                 </td>
                 <td>
-                    {{result.longBusinessSummary}}
+                    {{result.longBusinessSummary[:200]}}...
                 </td>
             </tr>
         {% endfor %}
