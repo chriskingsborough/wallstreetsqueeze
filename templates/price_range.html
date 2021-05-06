@@ -54,10 +54,18 @@
                         ${{ '%.2f'|format(stock.price) }}
                     </td>
                     <td>
-                        ${{ '%.2f'|format(stock.fiftyDayAverage) }}
+                        {% if stock.fiftyDayAverage is not none %}
+                            {{ '$%.2f'|format(stock.fiftyDayAverage) }}
+                        {% else %}
+                            {{''}}
+                        {% endif %}
                     </td>
                     <td>
-                        ${{ '%.2f'|format(stock.twoHundredDayAverage) }}
+                        {% if stock.twoHundredDayAverage is not none %}
+                            {{ '$%.2f'|format(stock.twoHundredDayAverage) }}
+                        {% else %}
+                            {{''}}
+                        {% endif %}
                     </td>
                     <td>
                         ${{ '%.2f'|format(stock.fiftyTwoWeekLow) }}
