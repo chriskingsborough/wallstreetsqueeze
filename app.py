@@ -323,13 +323,20 @@ def fifty_two_week_high():
         PriceRangeHigh
     ).limit(50).all()
     date = fetch_refresh_date()
-    title = 'Top of Price Range'
+    title = '52 Week High'
+
+    meta = """
+        This collection contains stocks at or near their 52 Week High. 52 Weeks Highs are
+        updated on a weekly basis, so stocks may cross above their previous 52 Week High.
+        These cases represent a fresh 52 Week High and will be reflected in the next update.
+    """
 
     text = Markup(
         """
         <p>
-        The Top of Price range collection contains stocks which are at the top of their
-        52 week price range.<br/>
+        This collection contains stocks at or near their 52 Week High. 52 Weeks Highs are
+        updated on a weekly basis, so stocks may cross above their previous 52 Week High.
+        These cases represent a fresh 52 Week High and will be reflected in the next update.<br/>
         Please note, while we do our best to provide accurate information, you should always double check
         and verify this information yourself prior to making any investment decisions.
         </p>
@@ -339,6 +346,7 @@ def fifty_two_week_high():
     return render_template(
         'price_range.html',
         title=title,
+        meta=meta,
         text=text,
         stock_data=stocks,
         refresh_date=date
@@ -347,28 +355,35 @@ def fifty_two_week_high():
 @app.route('/52_week_low')
 def fifty_two_week_low():
 
-    app.logger.info('querying database')
     stocks = db.session.query(
         PriceRangeLow
     ).limit(50).all()
-    app.logger.info('stocks queried')
+
     date = fetch_refresh_date()
-    title = 'Bottom of Price Range'
+    title = '52 Week Low'
+
+    meta = """
+        This collection contains stocks at or near their 52 Week Low. 52 Weeks Lows are
+        updated on a weekly basis, so stocks may cross below their previous 52 Week Low.
+        These cases represent a fresh 52 Week Low and will be reflected in the next update.
+    """
 
     text = Markup(
         """
         <p>
-        The Bottom of Price range collection contains stocks which are at the bottom of their
-        52 week price range.<br/>
+        This collection contains stocks at or near their 52 Week Low. 52 Weeks Lows are
+        updated on a weekly basis, so stocks may cross below their previous 52 Week Low.
+        These cases represent a fresh 52 Week Low and will be reflected in the next update.<br/>
         Please note, while we do our best to provide accurate information, you should always double check
         and verify this information yourself prior to making any investment decisions.
         </p>
         """
     )
-    app.logger.info('preparing template')
+
     return render_template(
         'price_range.html',
         title=title,
+        meta=meta,
         text=text,
         stock_data=stocks,
         refresh_date=date
@@ -635,7 +650,6 @@ def stock_page(ticker):
 
     # TODO: might make sense to just pass the list
     collections_string = ', '.join(_collections)
-
 
     return render_template(
         'stock_info.html',
