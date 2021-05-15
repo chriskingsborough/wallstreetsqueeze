@@ -400,6 +400,9 @@ def pe_under_fifteen():
 
     text = Markup(
         """
+        This collection contains stocks with lower Price to Earnings Ratios. A
+        lower PE Ratio means that investors are willing to pay less for a companies earnings.
+        As such, these companies may be undervalued compared to their earnings per share. 
         """
     )
 
@@ -422,6 +425,10 @@ def pb_under_one():
 
     text = Markup(
         """
+        The Price to Book Ratio is the ratio of a company's share price compared
+        to its book value. A P/B Ratio of 1 indicates a stock is trading in line
+        with its book value. A P/B Ratio under 1 indicates a stock may be
+        undervalued compared to its book value.
         """
     )
 
@@ -443,7 +450,11 @@ def peg_under_one():
     title = 'PEG Ratio Under One'
 
     text = Markup(
-        """
+        """Price/Earnings to Growth is a broad metric used by investors to determine
+        the value of a company relative to its growth prospects. A PEG ratio of 1 indicates
+        a perfect correlation between a company's market value and its growth prospects. A
+        PEG Ratio under 1 represents a company that may be undervalued relative to its growth
+        potential.
         """
     )
 
@@ -535,7 +546,9 @@ def crypto():
     return render_template(
         'specialty_stocks.html',
         title='Cryptocurrencies & Blockchain',
-        text='This collection contains stocks which are related to cryptocurrencies or blockchain.',
+        text="""This collection contains stocks which are related to cryptocurrencies or blockchain.
+        This includes companies which mine cryptocurrencies such as Bitcoin, facilitate trading cryptocurrencies
+        such as Bitcoin and Ethereum and companies which engage in other blockchain related operations.""",
         meta=meta,
         stock_data=stocks,
         refresh_date=date
@@ -558,7 +571,7 @@ def electric_vehicles():
         'specialty_stocks.html',
         title='Electric Vehicles',
         text="""This collection contains stocks which are related to Electric Vehicle manufacture or related
-        industries such as charging stations.""",
+        industries such as EV charging stations.""",
         stock_data=stocks,
         refresh_date=date
     )
@@ -621,7 +634,7 @@ def pets():
     return render_template(
         'specialty_stocks.html',
         title='Pets',
-        text='This collection contains stocks which are related to pets.',
+        text='This collection contains stocks which are related to pets. This includes pet food for dogs and cats, pet products and pet insurance providers.',
         stock_data=stocks,
         refresh_date=date
     )
