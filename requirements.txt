@@ -15,7 +15,7 @@ idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.11.3
 lxml==4.6.3
-Mako==1.1.4
+Mako==1.2.2
 MarkupSafe==1.1.1
 multitasking==0.0.9
 numpy==1.19.5
